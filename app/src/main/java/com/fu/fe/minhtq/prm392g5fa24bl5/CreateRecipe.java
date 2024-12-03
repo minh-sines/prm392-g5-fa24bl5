@@ -10,6 +10,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class CreateRecipe extends AppCompatActivity {
 
+    private void bindingView(){
+        
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
