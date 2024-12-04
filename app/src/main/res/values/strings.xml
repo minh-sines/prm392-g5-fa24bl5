@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PRM392 G5 FA24 BL5</string>
+    <string name="forgot_password"><u>Quên mật khẩu?</u></string>
+    <string name="signup"><u>Đăng kí</u></string>
 </resources>
