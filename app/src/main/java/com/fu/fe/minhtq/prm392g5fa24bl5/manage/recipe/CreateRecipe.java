@@ -1,4 +1,4 @@
-package com.fu.fe.minhtq.prm392g5fa24bl5;
+package com.fu.fe.minhtq.prm392g5fa24bl5.manage.recipe;
 
 import android.os.Bundle;
 
@@ -8,11 +8,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.fu.fe.minhtq.prm392g5fa24bl5.R;
+
 public class CreateRecipe extends AppCompatActivity {
 
-    private void bindingView(){
-        
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
