@@ -26,10 +26,6 @@
             android:exported="true" />
         <activity
             android:name=".Login.LoginActivity"
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CreateRecipe"
             android:exported="false" />
         <activity
 
