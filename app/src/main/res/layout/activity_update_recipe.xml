@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 顶部工具栏 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back" />
+
+    </RelativeLayout>
+
+    <!-- 主要内容区域 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 食物图片 -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+                <ImageView
+                    android:id="@+id/ivFood"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+
+                <ImageButton
+                    android:id="@+id/btnEdit"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="16dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_delete" />
+            </FrameLayout>
+
+            <!-- 菜品标题 -->
+            <TextView
+                android:id="@+id/tvDishName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="Gà hấp lá chanh" />
+
+            <!-- 描述文本 -->
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:textSize="14sp"
+                tools:text="Bữa cơm gia đình của người Việt Nam..." />
+
+            <!-- 烹饪时间 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thời gian nấu"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCookingTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="60 phút" />
+            </LinearLayout>
+
+            <!-- 原料标题 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Nguyên liệu"
+                android:textColor="#00FF00"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- 原料列表 -->
+            <TextView
+                android:id="@+id/tvIngredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                tools:text="Thịt gà tươi, lá chanh, muối tiêu" />
+
+            <!-- 步骤标题 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Các bước thực hiện"
+                android:textColor="#00FF00"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- 步骤列表 -->
+            <LinearLayout
+                android:id="@+id/llStepsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="vertical">
+
+                <!-- 步骤项将在代码中动态添加 -->
+            </LinearLayout>
+
+            <!-- 添加步骤按钮 -->
+            <Button
+                android:id="@+id/btnAddStep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Thêm bước" />
+
+            <!-- 添加图片描述按钮 -->
+            <Button
+                android:id="@+id/btnAddImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="Thêm ảnh mô tả" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
