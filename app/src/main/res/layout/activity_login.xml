@@ -58,6 +58,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtLoginEmail" />
 
+    <CheckBox
+        android:id="@+id/cbSaveAccount"
+        style="@style/customCheckboxStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="Lưu tài khoản đăng nhập"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtLoginPassword" />
+
+    <TextView
+        android:id="@+id/tvLoginError"
+        style="@style/customTextError"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="Email hoặc mật khẩu không đúng. Xin hãy nhập lại!"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cbSaveAccount" />
+
     <Button
         android:id="@+id/btnLogin"
         style="@style/customLoginButton"
@@ -68,21 +92,18 @@
         android:layout_marginEnd="32dp"
         android:text="Đăng nhập"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtLoginPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoginError"
         app:shapeAppearanceOverlay="@style/customLoginButton" />
 
     <Button
-        android:id="@+id/btnForgotPassword"
+        android:id="@+id/btnLoginForgotPassword"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="26dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="#00FFFFFF"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingRight="0dp"
-        android:paddingBottom="0dp"
+        android:padding="0dp"
         android:text="@string/forgot_password"
         android:textColor="#787878"
         android:textStyle="bold"
@@ -101,7 +122,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnForgotPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLoginForgotPassword" />
 
     <View
         android:id="@+id/or_view1"
@@ -131,7 +152,7 @@
         android:id="@+id/tvNoAccount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="110dp"
         android:text="Chưa có tài khoản?"
         android:textColor="#787878"
         android:textSize="14sp"
@@ -142,13 +163,10 @@
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="55dp"
-        android:layout_height="30dp"
+        android:layout_height="26dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#00FFFFFF"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingRight="0dp"
-        android:paddingBottom="0dp"
+        android:padding="0dp"
         android:text="@string/signup"
         android:textColor="#787878"
         android:textSize="14sp"
