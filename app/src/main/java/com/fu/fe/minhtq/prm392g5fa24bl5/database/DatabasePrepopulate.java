@@ -55,15 +55,32 @@ public class DatabasePrepopulate extends AppCompatActivity {
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe2_1", "", "", 2, 0, 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe2_2", "", "", 2, 0, 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe2_3", "", "", 2, 0, 0));
+        int size = 0;
 
         accounts = instance.accountDAO().getAllAccounts();
         recipes = instance.recipeDAO().getAllRecipes();
         favorites = instance.favoriteDAO().getAllFavorites();
 
         zdp_text1.setText("Database loaded");
-        zdp_text2.setText("Accounts: " + accounts.size());
-        zdp_text3.setText("Recipes: " + recipes.size());
-        zdp_text4.setText("Favorites: " + favorites.size());
+
+        if (!accounts.isEmpty()) {
+            size=accounts.size();
+        } else size = 0;
+        zdp_text2.setText("Accounts: " + size);
+
+        if (!recipes.isEmpty()) {
+            size=recipes.size();
+        }
+        else size = 0;
+        zdp_text3.setText("Recipes: " + size);
+
+        if (!favorites.isEmpty()) {
+            size=favorites.size();
+        } else size = 0;
+        zdp_text4.setText("Favorites: " + size);
+
+
+
 
 
     }
