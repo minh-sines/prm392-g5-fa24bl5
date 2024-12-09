@@ -20,4 +20,12 @@ public interface AccountDAO {
     @Query("SELECT * FROM Account WHERE account_id = :id")
     Account getAccountById(int id);
 
+    @Query("SELECT * FROM Account WHERE email = :email AND password = :password")
+    Account getAccountForLogin(String email, String password);
+
+    @Query("SELECT * FROM Account WHERE email = :email")
+    Account getAccountByEmail(String email);
+
+    @Query("UPDATE Account SET password = :password WHERE email = :email")
+    void updatePassword(String email, String password);
 }

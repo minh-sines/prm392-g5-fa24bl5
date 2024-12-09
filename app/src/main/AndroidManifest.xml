@@ -22,6 +22,13 @@
             android:name=".manage.recipe.UpdateRecipe"
             android:exported="false" />
         <activity
+            android:name=".TestFavoriteActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Home_of_5_fragment"
+            android:exported="true"
+            android:theme="@style/Theme.PRM392G5FA24BL5" />
+        <activity
             android:name=".Login.SignupActivity"
             android:exported="true" />
         <activity

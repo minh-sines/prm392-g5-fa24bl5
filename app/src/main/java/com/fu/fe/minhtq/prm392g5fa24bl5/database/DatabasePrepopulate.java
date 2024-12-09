@@ -46,24 +46,41 @@ public class DatabasePrepopulate extends AppCompatActivity {
     private void loadDatabase(View view) {
         AppDatabase instance = AppDatabase.getInstance(this);
         //would get duplicated if insert again
-        instance.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
-        instance.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
-        instance.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
+//        instance.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
+//        instance.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
+//        instance.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe1_1", "", "", 1, 0, 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe1_2", "", "", 1, 0, 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe1_3","", "",1, 0,0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe2_1", "", "", 2, 0, 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe2_2", "", "", 2, 0, 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe2_3", "", "", 2, 0, 0));
+        int size = 0;
 
         accounts = instance.accountDAO().getAllAccounts();
         recipes = instance.recipeDAO().getAllRecipes();
         favorites = instance.favoriteDAO().getAllFavorites();
 
         zdp_text1.setText("Database loaded");
-        zdp_text2.setText("Accounts: " + accounts.size());
-        zdp_text3.setText("Recipes: " + recipes.size());
-        zdp_text4.setText("Favorites: " + favorites.size());
+
+        if (!accounts.isEmpty()) {
+            size=accounts.size();
+        } else size = 0;
+        zdp_text2.setText("Accounts: " + size);
+
+        if (!recipes.isEmpty()) {
+            size=recipes.size();
+        }
+        else size = 0;
+        zdp_text3.setText("Recipes: " + size);
+
+        if (!favorites.isEmpty()) {
+            size=favorites.size();
+        } else size = 0;
+        zdp_text4.setText("Favorites: " + size);
+
+
+
 
 
     }

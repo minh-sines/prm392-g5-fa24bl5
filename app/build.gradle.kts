@@ -29,12 +29,21 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+    //roomu
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
+    //fragment + bottom nav + tablayout
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     implementation(libs.appcompat)
     implementation(libs.material)

@@ -17,16 +17,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
+import com.fu.fe.minhtq.prm392g5fa24bl5.database.AccountDAO;
+import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Account;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText edtUserame, edtEmail, edtPassword, edtRepassword;
+    private EditText edtUsername, edtEmail, edtPassword, edtRepassword;
     private Button btnSignup, btnBack;
     private CheckBox cbAccept;
     private TextView tvError;
+    private AccountDAO accountDAO;
 
     private void bindingView() {
-        edtUserame = findViewById(R.id.edtSignupUsername);
+        edtUsername = findViewById(R.id.edtSignupUsername);
         edtEmail = findViewById(R.id.edtSignupEmail);
         edtPassword = findViewById(R.id.edtSignupPassword);
         edtRepassword = findViewById(R.id.edtSignupRepassword);
@@ -35,7 +39,9 @@ public class SignupActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnSignupBack);
 
         cbAccept = findViewById(R.id.cbAcceptDescription);
-        tvError = findViewById(R.id.tvError);
+        tvError = findViewById(R.id.tvSignupError);
+
+        accountDAO = AppDatabase.getInstance(this).accountDAO();
     }
 
     private void bindingAction() {
@@ -44,16 +50,26 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void onBtnSignupClick(View view) {
-        String username = edtUserame.getText().toString().trim();
+        String username = edtUsername.getText().toString().trim();
         String email = edtEmail.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
         String repassword = edtRepassword.getText().toString().trim();
         boolean accept = cbAccept.isChecked();
 
         if (validateSignup(username, email, password, repassword, accept)) {
-            //Kiểm tra tài khoản đăng kí
+            Account account = accountDAO.getAccountByEmail(email);
+            if (account != null) {
+                tvError.setText("Địa chỉ Email đã tồn tại!");
+                tvError.setVisibility(View.VISIBLE);
+            } else {
+//                Date now = new Date();
+                accountDAO.insertAccount(new Account(username, email, password));
+                Toast.makeText(this, "Đăng kí thành công! Hãy đăng nhập lại.", Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(this, "Đăng kí thành công!", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
         }
     }
 
@@ -69,8 +85,8 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(username)) {
-            edtUserame.setError("Vui lòng nhập tên đăng nhập!");
-            edtUserame.requestFocus();
+            edtUsername.setError("Vui lòng nhập tên đăng nhập!");
+            edtUsername.requestFocus();
             return false;
         }
 
