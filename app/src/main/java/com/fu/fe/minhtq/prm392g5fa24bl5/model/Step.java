@@ -22,11 +22,15 @@ public class Step {
     public String detail;
     public int image;
 
-    public Step(int recipe_id, int number, String detail, int image) {
+    public int is_deleted;
+
+    public Step(int recipe_id, int number, String detail, int image, int is_deleted) {
         this.recipe_id = recipe_id;
         this.number = number;
         this.detail = detail;
         this.image = image;
+        this.is_deleted = is_deleted;
+
     }
 
     public int getStep_id() {
@@ -67,5 +71,9 @@ public class Step {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public int getIs_deleted() {
+        return is_deleted;
     }
 }
