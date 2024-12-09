@@ -3,13 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:fitsSystemWindows="true"
     android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="16dp"
         android:gravity="center_horizontal">
+
 
         <!-- Icon thêm ảnh -->
         <ImageView
@@ -76,23 +79,39 @@
             android:layout_marginBottom="12dp" />
 
         <!-- Nguyên liệu -->
-        <TextView
+        <LinearLayout
+            android:id="@+id/ingredientsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nguyên liệu"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/holo_green_dark"
-            android:layout_marginBottom="8dp" />
+            android:orientation="vertical"
+            android:layout_marginBottom="12dp">
 
-        <EditText
-            android:id="@+id/edtIngredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nhập nguyên liệu"
-            android:background="@android:drawable/edit_text"
-            android:padding="8dp"
-            android:layout_marginBottom="12dp" />
+            <!-- Dòng nguyên liệu đầu tiên -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Nhập nguyên liệu"
+                    android:background="@android:drawable/edit_text"
+                    android:padding="8dp" />
+
+                <ImageButton
+                    android:id="@+id/btnAddIngredient"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_add"
+                    android:background="@null"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="Add ingredient" />
+            </LinearLayout>
+        </LinearLayout>
 
         <!-- Các bước thực hiện -->
         <TextView
@@ -106,45 +125,59 @@
 
         <!-- Bước 1 -->
         <LinearLayout
+            android:id="@+id/listLayoutStep"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/stepsContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bước 1"
-                android:layout_weight="1"
-                android:textSize="14sp" />
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edtStep1"
-                android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Bước 1"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edtStep1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="Nhập bước 1"
+                    android:padding="8dp" />
+
+                <ImageButton
+                    android:id="@+id/btnAddImageStep"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="4dp"
+                    android:background="@null"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/add_image" />
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/btnDeleteStep1"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginStart="4dp"-->
+<!--                    android:background="@null"-->
+<!--                    android:scaleType="centerInside"-->
+<!--                    android:src="@drawable/ic_delete" />-->
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/imageContainerForStep"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:hint="Nhập bước 1"
-                android:background="@android:drawable/edit_text"
+                android:orientation="horizontal"
                 android:padding="8dp" />
-
-            <ImageButton
-                android:id="@+id/btnAddStep1"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/add_image_32"
-                android:background="@null"
-                android:layout_marginStart="4dp"
-                android:scaleType="centerInside"/>
-
-            <ImageButton
-                android:id="@+id/btnDeleteStep1"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_delete"
-                android:background="@null"
-                android:layout_marginStart="4dp"
-                android:scaleType="centerInside"/>
         </LinearLayout>
 
         <!-- Nút thêm bước -->
@@ -174,5 +207,22 @@
             android:layout_height="120dp"
             android:src="@drawable/ic_image_add"
             android:scaleType="centerInside" />
+
+        <LinearLayout
+            android:id="@+id/selectedImagesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"/>
+        <Button
+            android:id="@+id/btnCreateDish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Thêm Món Ăn"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@android:color/holo_blue_dark"
+            android:padding="12dp" />
     </LinearLayout>
 </ScrollView>
