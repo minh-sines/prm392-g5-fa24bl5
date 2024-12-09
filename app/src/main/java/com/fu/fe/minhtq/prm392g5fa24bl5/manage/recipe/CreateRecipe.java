@@ -76,6 +76,7 @@ public class CreateRecipe extends AppCompatActivity {
     private LinearLayout selectedImagesContainer;
 
     private LinearLayout imageContainerForStep;
+    private int maxWidth;
 
 
     private int stepCount = 1;
@@ -101,6 +102,13 @@ public class CreateRecipe extends AppCompatActivity {
         selectedImagesContainer = findViewById(R.id.selectedImagesContainer);
         btnAddImageStep = findViewById(R.id.btnAddImageStep);
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels; // Chiều rộng màn hình
+
+        // Tính toán chiều rộng tối đa của ảnh (1/4 chiều rộng màn hình)
+        maxWidth = screenWidth / 4;
+
     }
 
     private void bindingAction() {
@@ -109,6 +117,11 @@ public class CreateRecipe extends AppCompatActivity {
         btnAddStep.setOnClickListener(this::onButtonAddStep);
         imgAddDescriptionImage.setOnClickListener(this::onButtonImageDescription);
         btnAddImageStep.setOnClickListener(this::onButtonImageStep);
+        btnAddDish.setOnClickListener(this::onButtonCreateDish);
+    }
+
+    private void onButtonCreateDish(View view) {
+
     }
 
     private void onButtonImageStep(View view) {
@@ -399,7 +412,7 @@ public class CreateRecipe extends AppCompatActivity {
         addImageButton.setPadding(4, 0, 0, 0);
         addImageButton.setTag(stepCount);
         addImageButton.setOnClickListener(v -> {
-            selectedImageStepIndex = (int) v.getTag() - countDeleteStep;
+            selectedImageStepIndex = (int) v.getTag() - countDeleteStep - 1;
             openImagePickerDialog(REQUEST_CAMERA_STEP,REQUEST_GALLERY_STEP,
                     REQUEST_CAMERA_STEP_PERMISSION,REQUEST_GALLERY_STEP_PERMISSION);
         });
@@ -436,7 +449,7 @@ public class CreateRecipe extends AppCompatActivity {
 
     private void updateStepTags(LinearLayout listLayoutStep) {
         int minusStep = 0;
-        for (int i = 0; i <= stepCount; i++) {
+        for (int i = 0; i < stepCount; i++) {
             LinearLayout stepRow = (LinearLayout) listLayoutStep.getChildAt(i);
             ImageButton addImageButton = (ImageButton) stepRow.getChildAt(2); // Giả định nút addImageButton ở vị trí thứ 2
             if(addImageButton != null){
@@ -452,7 +465,7 @@ public class CreateRecipe extends AppCompatActivity {
     private void updateStepNumbers(LinearLayout stepsContainer) {
         int minusStep = 0;
 //        int childCount = stepsContainer.getChildCount();
-        for (int i = 0; i <= stepCount; i++) {
+        for (int i = 0; i < stepCount; i++) {
             LinearLayout stepRow = (LinearLayout) stepsContainer.getChildAt(i);
             TextView stepLabel = (TextView) stepRow.getChildAt(0);
 
@@ -504,24 +517,33 @@ public class CreateRecipe extends AppCompatActivity {
 
 
     private void addImageToDescriptionList(Bitmap bitmap) {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int screenWidth = displayMetrics.widthPixels; // Chiều rộng màn hình
 
-        // Tính toán chiều rộng tối đa của ảnh (1/4 chiều rộng màn hình)
-        int maxWidth = screenWidth / 4;
-        // Tạo một ImageView mới để hiển thị ảnh
-        ImageView imageView = new ImageView(this);
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                maxWidth,
-                maxWidth
-        ));
-        imageView.setImageBitmap(bitmap);
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        imageView.setMaxWidth(40);
-        imageView.setMaxHeight(40);
+        new Thread(() -> {
+            Bitmap resizedBitmap = resizeBitmap(bitmap, maxWidth);
 
-        // Thêm ảnh vào LinearLayout chứa ảnh mô tả
-        selectedImagesContainer.addView(imageView);
+            runOnUiThread(() -> {
+                // Tạo ImageView mới
+                ImageView imageView = new ImageView(this);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(maxWidth, maxWidth);
+                params.setMargins(8, 8, 8, 8);
+                imageView.setLayoutParams(params);
+                imageView.setImageBitmap(resizedBitmap);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                // Thêm vào container
+                selectedImagesContainer.addView(imageView);
+            });
+        }).start();
+    }
+
+    private Bitmap resizeBitmap(Bitmap bitmap, int maxWidth) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        // Tỷ lệ thu nhỏ
+        float scale = (float) maxWidth / width;
+
+        // Tạo bitmap mới với kích thước nhỏ hơn
+        return Bitmap.createScaledBitmap(bitmap, maxWidth, (int) (height * scale), true);
     }
 }
