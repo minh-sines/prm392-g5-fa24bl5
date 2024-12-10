@@ -20,6 +20,8 @@ public interface RecipeDAO {
 
     @Query("SELECT * FROM Recipe WHERE [delete] = false")
     List<Recipe> getAllRecipes();
+    @Query("SELECT * FROM Recipe WHERE recipe_id = :id")
+    Recipe getRecipeById(int id);
 
     @Query("SELECT * FROM Recipe WHERE created_by = :id")
     List<Recipe> getAllRecipesByAccountId(int id);

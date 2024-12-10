@@ -22,4 +22,7 @@ public interface Recipe_imageDAO {
     void deleteRecipe_image(Recipe_image recipe_image);
     @Query("DELETE FROM Recipe_image WHERE recipe_id = :recipeId")
     void deleteRecipe_imagesByRecipeId(int recipeId);
+
+    @Query("SELECT image FROM Recipe_image WHERE recipe_id = :recipeId")
+    List<String> getImagePathsByRecipeId(int recipeId);
 }

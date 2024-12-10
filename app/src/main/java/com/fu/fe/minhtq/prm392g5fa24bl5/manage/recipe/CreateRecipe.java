@@ -208,7 +208,7 @@ public class CreateRecipe extends AppCompatActivity {
         String fileName = "";
 
         Bitmap bitmap = ((BitmapDrawable) imgAddDish.getDrawable()).getBitmap();
-        if (bitmap != null && !"default_image".equals(imgAddDish.getTag())) {
+        if (bitmap != null && !isDefaultImage(imgAddDish)) {
             // Tạo tên file cho ảnh
             fileName = "recipe_" + recipeId + ".png";
 
@@ -794,6 +794,14 @@ public class CreateRecipe extends AppCompatActivity {
         return imageButton.getDrawable().getConstantState().equals(
                 getResources().getDrawable(R.drawable.add_image).getConstantState()
         );
+    }
+
+    private boolean isDefaultImage(ImageView imageView) {
+        return imageView.getDrawable() != null &&
+                imageView.getDrawable().getConstantState() != null &&
+                imageView.getDrawable().getConstantState().equals(
+                        getResources().getDrawable(R.drawable.ic_image_add, null).getConstantState()
+                );
     }
 
 

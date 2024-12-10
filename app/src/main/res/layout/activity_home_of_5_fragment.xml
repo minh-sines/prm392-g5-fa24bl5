@@ -22,13 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:fitsSystemWindows="false"
+        android:fitsSystemWindows="true"
         android:background="#f0f0f0"
         app:itemIconTint="@color/color_nav"
         app:itemTextColor="@color/color_nav"
         app:menu="@menu/bottom_nav_menu"
         style="@style/NoRippleEffect"
         app:itemBackground="@drawable/nav_background"
+
         />
 
 
