@@ -23,16 +23,19 @@ public class Recipe {
     public String time;
     //    @ForeignKey(entity = Account.class, parentColumns = "account_id", childColumns = "created_by")
     public int created_by;
+
     public long created_at;
     public long updated_at;
-    public int image;
+    public String image;
     public boolean is_published = false;
+
+    public boolean delete = false;
 
     public int heartCount = 0;
     public int saveCount = 0;
     public int commentCount = 0;
 
-    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, int image) {
+    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, String image) {
         this.title = title;
         this.description = description;
         this.time = time;
@@ -48,7 +51,7 @@ public class Recipe {
     }
 
     @Ignore
-    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, int image, boolean is_published) {
+    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, String image, boolean is_published) {
         this.title = title;
         this.description = description;
         this.time = time;
@@ -115,11 +118,11 @@ public class Recipe {
         this.updated_at = updated_at;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

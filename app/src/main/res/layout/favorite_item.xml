@@ -53,7 +53,7 @@
                 android:id="@+id/fragment_2_1_ingredient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
                 android:text="TextView"
                 android:textSize="10sp"
@@ -64,13 +64,13 @@
                 android:id="@+id/fragment_2_1_step"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
+                android:layout_marginStart="30dp"
                 android:text="TextView"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_2_1_ingredient"
-                app:layout_constraintVertical_bias="0.257" />
+                app:layout_constraintVertical_bias="0.318" />
 
             <ImageButton
                 android:id="@+id/bookmarkButton"
@@ -85,6 +85,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.873"
                 />
+
+            <TextView
+                android:id="@+id/fragment_2_1_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_2_1_image" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

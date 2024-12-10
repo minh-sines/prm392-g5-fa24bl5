@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
 import com.fu.fe.minhtq.prm392g5fa24bl5.RecipeSavedAdapter;
+import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -52,11 +53,13 @@ public class Saved_Fragment extends Fragment {
 
     private void fillData()
     {
-        recipeList = new ArrayList<>();
-        for(int i = 0; i < 10; i++)
-        {
-            recipeList.add(new Recipe("Title " + i, "Description " + i, "Time " + i, 2, 1, 1, R.drawable.cutecat));
-        }
+//        recipeList = new ArrayList<>();
+//        for(int i = 0; i < 10; i++)
+//        {
+//            recipeList.add(new Recipe("Title " + i, "Description " + i, "Time " + i, 2, 1, 1, "Recipe_1.png"));
+//        }
+        AppDatabase instance = AppDatabase.getInstance(getContext());
+        recipeList = instance.recipeDAO().getAllRecipesByAccountId(1);
     }
 
 

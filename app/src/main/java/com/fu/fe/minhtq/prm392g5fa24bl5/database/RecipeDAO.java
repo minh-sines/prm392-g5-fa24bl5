@@ -18,10 +18,10 @@ public interface RecipeDAO {
     @Query("SELECT * FROM Recipe")
     List<Recipe> getAllRecipes();
 
-    @Query("SELECT * FROM Recipe WHERE created_by = :id")
+    @Query("SELECT * FROM Recipe WHERE created_by = :id and  [delete] = false")
     List<Recipe> getAllRecipesByAccountId(int id);
 
-    @Query("SELECT Recipe.* FROM Recipe INNER JOIN Favorite ON Recipe.recipe_id = Favorite.recipe_id WHERE Favorite.user_id = :id")
+    @Query("SELECT Recipe.* FROM Recipe INNER JOIN Favorite ON Recipe.recipe_id = Favorite.recipe_id WHERE Favorite.user_id = :id and  Recipe.[delete] = false")
     List<Recipe> getFavoriteRecipesByAccountId(int id);
 
     @Insert
