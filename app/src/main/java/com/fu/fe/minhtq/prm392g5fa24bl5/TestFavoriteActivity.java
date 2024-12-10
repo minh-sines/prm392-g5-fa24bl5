@@ -25,7 +25,7 @@ public class TestFavoriteActivity extends AppCompatActivity {
         recipeList = new ArrayList<>();
         for(int i = 0; i < 10; i++)
         {
-            recipeList.add(new Recipe("Title " + i, "Description " + i, "Time " + i, R.drawable.logo, 1, 1));
+            recipeList.add(new Recipe("Title " + i, "Description " + i, "Time " + i, 2, 1, 1, R.drawable.cutecat));
         }
     }
     private void bindingView()

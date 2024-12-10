@@ -2,6 +2,7 @@ package com.fu.fe.minhtq.prm392g5fa24bl5.database;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 
@@ -19,5 +20,7 @@ public interface AccountDAO {
 
     @Query("SELECT * FROM Account WHERE account_id = :id")
     Account getAccountById(int id);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAccountsList(List<Account> accounts);
 
 }

@@ -25,18 +25,38 @@ public class Recipe {
     public int created_by;
     public long created_at;
     public long updated_at;
+    public int image;
+    public boolean is_published = false;
 
-    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at) {
+    public int heartCount = 0;
+    public int saveCount = 0;
+    public int commentCount = 0;
+
+    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, int image) {
         this.title = title;
         this.description = description;
         this.time = time;
         this.created_by = created_by;
         this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.image = image;
     }
     @Ignore
     public Recipe(String title, int created_by) {
         this.title = title;
         this.created_by = created_by;
+    }
+
+    @Ignore
+    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, int image, boolean is_published) {
+        this.title = title;
+        this.description = description;
+        this.time = time;
+        this.created_by = created_by;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.image = image;
+        this.is_published = is_published;
     }
 
     public int getRecipe_id() {
@@ -93,5 +113,45 @@ public class Recipe {
 
     public void setUpdated_at(long updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public void setPublished(boolean is_published) {
+        this.is_published = is_published;
+    }
+
+    public boolean isPublished() {
+        return is_published;
+    }
+
+    public int getHeartCount() {
+        return heartCount;
+    }
+
+    public void setHeartCount(int heartCount) {
+        this.heartCount = heartCount;
+    }
+
+    public int getSaveCount() {
+        return saveCount;
+    }
+
+    public void setSaveCount(int saveCount) {
+        this.saveCount = saveCount;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 }
