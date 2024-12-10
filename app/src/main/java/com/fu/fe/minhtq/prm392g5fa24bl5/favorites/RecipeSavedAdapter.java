@@ -1,4 +1,4 @@
-package com.fu.fe.minhtq.prm392g5fa24bl5;
+package com.fu.fe.minhtq.prm392g5fa24bl5.favorites;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fu.fe.minhtq.prm392g5fa24bl5.R;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.*;
 
 import java.io.File;

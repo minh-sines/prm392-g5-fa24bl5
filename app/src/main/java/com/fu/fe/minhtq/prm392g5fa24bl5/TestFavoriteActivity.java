@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fu.fe.minhtq.prm392g5fa24bl5.favorites.RecipeFavAdapter;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class TestFavoriteActivity extends AppCompatActivity {
         recipeList = new ArrayList<>();
         for(int i = 0; i < 10; i++)
         {
-            recipeList.add(new Recipe("Title " + i, "Description " + i, "Time " + i, 2, 1, 1, "Recipe_1.png"));
+            recipeList.add(new Recipe("Title " + i, "Description " + i, "Time " + i, 2, 1, 1, "recipe_1.png"));
         }
     }
     private void bindingView()

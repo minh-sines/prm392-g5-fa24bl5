@@ -1,7 +1,6 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.favorites;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,12 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
-import com.fu.fe.minhtq.prm392g5fa24bl5.RecipeSavedAdapter;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
