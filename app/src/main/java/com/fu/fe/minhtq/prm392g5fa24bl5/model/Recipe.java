@@ -4,6 +4,9 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import java.util.List;
 
 @Entity(
         tableName = "recipe",
@@ -26,6 +29,8 @@ public class Recipe {
     public long created_at;
     public long updated_at;
     public boolean delete;
+    public String mainImage;
+
 
 
     public Recipe() {
@@ -38,6 +43,17 @@ public class Recipe {
         this.created_by = created_by;
         this.created_at = created_at;
     }
+
+//    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, boolean delete, String mainImage) {
+//        this.title = title;
+//        this.description = description;
+//        this.time = time;
+//        this.created_by = created_by;
+//        this.created_at = created_at;
+//        this.updated_at = updated_at;
+//        this.delete = delete;
+//        this.mainImage = mainImage;
+//    }
 
     public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, boolean delete) {
         this.title = title;
@@ -121,5 +137,13 @@ public class Recipe {
 
     public void setUpdated_at(long updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 }

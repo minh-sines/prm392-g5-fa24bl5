@@ -18,12 +18,11 @@ public class Ingredient {
     public int ingredient_id;
     public int recipe_id;
     public String name;
-    public String quantity;
 
-    public Ingredient(int recipe_id, String name, String quantity) {
+
+    public Ingredient(int recipe_id, String name) {
         this.recipe_id = recipe_id;
         this.name = name;
-        this.quantity = quantity;
     }
 
     public int getIngredient_id() {
@@ -50,11 +49,5 @@ public class Ingredient {
         this.name = name;
     }
 
-    public String getQuantity() {
-        return quantity;
-    }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
 }

@@ -16,14 +16,14 @@ public class Recipe_image {
 @PrimaryKey(autoGenerate = true)
     public int recipe_image_id;
     public int recipe_id;
-    public int image;
+    public String image;
 
-    public Recipe_image(int recipe_id, int image) {
-        this.recipe_id = recipe_id;
+    public Recipe_image(String image, int recipe_id) {
         this.image = image;
+        this.recipe_id = recipe_id;
     }
 
-        public int getRecipe_image_id() {
+    public int getRecipe_image_id() {
                 return recipe_image_id;
         }
 
@@ -39,11 +39,11 @@ public class Recipe_image {
                 this.recipe_id = recipe_id;
         }
 
-        public int getImage() {
-                return image;
-        }
+    public String getImage() {
+        return image;
+    }
 
-        public void setImage(int image) {
-                this.image = image;
-        }
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

@@ -15,4 +15,6 @@ public interface IngredientDAO {
 
     @Query("SELECT * FROM Ingredient")
     List<Ingredient> getAllIngredients();
+
+
 }

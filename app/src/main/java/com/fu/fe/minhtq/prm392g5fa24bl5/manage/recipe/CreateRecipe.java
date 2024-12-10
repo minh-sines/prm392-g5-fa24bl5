@@ -2,13 +2,17 @@ package com.fu.fe.minhtq.prm392g5fa24bl5.manage.recipe;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +30,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.fu.fe.minhtq.prm392g5fa24bl5.HomePage.HomePage;
+import com.fu.fe.minhtq.prm392g5fa24bl5.MainActivity;
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
+import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Account;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Ingredient;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe_image;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Step;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CreateRecipe extends AppCompatActivity {
 
@@ -121,6 +140,158 @@ public class CreateRecipe extends AppCompatActivity {
     }
 
     private void onButtonCreateDish(View view) {
+        if(edtDishName.getText().toString().isEmpty()){
+            Toast.makeText(this, "Vui lòng nhập tên món ăn", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(edtDescription.getText().toString().isEmpty()){
+            Toast.makeText(this, "Vui lòng nhập mô tả", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(edtCookingTime.getText().toString().isEmpty()){
+            Toast.makeText(this, "Vui lòng nhập thời gian", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        for (int i = 0; i < listLayoutStep.getChildCount(); i++) {
+            View child = listLayoutStep.getChildAt(i);
+
+            if (child instanceof LinearLayout) {
+                LinearLayout stepRow = (LinearLayout) child;
+                for (int j = 0; j < stepRow.getChildCount(); j++) {
+                    View stepChild = stepRow.getChildAt(j);
+                    if (stepChild instanceof EditText) {
+                        EditText stepInput = (EditText) stepChild;
+                        if (stepInput.getText().toString().trim().isEmpty()) {
+                            Toast.makeText(this, "Vui lòng nhập bước " + (i + 1), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < ingredientsContainer.getChildCount(); i++) {
+            View child = ingredientsContainer.getChildAt(i);
+
+            if (child instanceof LinearLayout) {
+                LinearLayout ingredientRow = (LinearLayout) child;
+                for (int j = 0; j < ingredientRow.getChildCount(); j++) {
+                    View ingredientChild = ingredientRow.getChildAt(j);
+                    if (ingredientChild instanceof EditText) {
+                        EditText ingredientInput = (EditText) ingredientChild;
+                        if (ingredientInput.getText().toString().trim().isEmpty()) {
+                            Toast.makeText(this, "Vui lòng nhập nguyên liệu " + (i + 1), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        }
+
+
+        Recipe recipe = new Recipe(
+                edtDishName.getText().toString(),
+                edtDescription.getText().toString(),
+                edtCookingTime.getText().toString(),
+                /* created_by */ 1, // ID người tạo (cần thay bằng ID thực tế nếu có)
+                System.currentTimeMillis(), // Thời gian tạo
+                System.currentTimeMillis(),  // Thời gian cập nhật
+                false // delete
+        );
+
+
+        // Thêm Recipe vào DB
+        AppDatabase db = AppDatabase.getInstance(this);
+//        db.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
+//        db.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
+//        db.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
+        long recipeId = db.recipeDAO().insertRecipe(recipe);
+        String fileName = "";
+
+        Bitmap bitmap = ((BitmapDrawable) imgAddDish.getDrawable()).getBitmap();
+        if (bitmap != null && !"default_image".equals(imgAddDish.getTag())) {
+            // Tạo tên file cho ảnh
+            fileName = "recipe_" + recipeId + ".png";
+
+            // Lưu ảnh vào bộ nhớ trong
+            saveImageToFile(bitmap, CreateRecipe.this, fileName);
+            recipe.setMainImage(fileName);
+            db.recipeDAO().updateRecipe(recipe);
+        }
+
+
+        if(selectedImagesContainer.getChildCount() > 0){
+            for (int i = 0; i < selectedImagesContainer.getChildCount(); i++) {
+                ImageView imageView = (ImageView) selectedImagesContainer.getChildAt(i);
+                bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                fileName = "recipe_" + recipeId + "_description_" + i + ".png";
+                saveImageToFile(bitmap, CreateRecipe.this, fileName);
+                Recipe_image recipe_image = new Recipe_image(fileName, (int) recipeId);
+                db.recipe_imageDAO().insertRecipe_image(recipe_image);
+            }
+        };
+
+
+        // Lưu danh sách nguyên liệu
+        for (int i = 0; i < ingredientsContainer.getChildCount(); i++) {
+            LinearLayout ingredientRow = (LinearLayout) ingredientsContainer.getChildAt(i);
+            EditText ingredientInput = (EditText) ingredientRow.getChildAt(0);
+            Ingredient ingredient = new Ingredient(
+                    (int)recipeId,
+                    ingredientInput.getText().toString()
+            );
+            db.ingredientDAO().insertIngredient(ingredient);
+        }
+
+
+
+        // Lưu danh sách bước
+        for (int i = 0; i < listLayoutStep.getChildCount(); i++) {
+            LinearLayout stepRow = (LinearLayout) listLayoutStep.getChildAt(i);
+            EditText stepInput = (EditText) stepRow.getChildAt(1);  // Text mô tả bước
+            ImageButton imageButton = (ImageButton) stepRow.getChildAt(2); // Nút để chọn ảnh
+
+            // Lấy URI của ảnh từ ImageButton
+//            Uri imageUri = getImageUriFromImageButton(imageButton);
+            final int stepIndex = i;
+
+            // Lấy Bitmap từ ImageButton
+            bitmap = getBitmapFromImageButton(imageButton);
+            if (bitmap != null && !isDefaultImage(imageButton)) {
+                // Tạo tên file cho ảnh
+                String fileNameStep = "recipe_" + recipeId + "_step_" + stepIndex + ".png";
+
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+
+                // Truyền Bitmap vào Runnable thay vì lấy nó trong run()
+                Bitmap finalBitmap = bitmap;
+                Runnable saveImageTask = new Runnable() {
+                    @Override
+                    public void run() {
+                        // Lưu ảnh vào bộ nhớ trong
+                        saveImageToFile(finalBitmap, CreateRecipe.this, fileNameStep);
+                    }
+                };
+
+                // Thực thi công việc lưu ảnh trong background
+                executor.execute(saveImageTask);
+
+                Step step = new Step();
+                step.setRecipe_id((int) recipeId);
+                step.setDetail(stepInput.getText().toString());
+                step.setNumber(stepIndex);
+
+                // Lưu tên file vào database, thay vì URL từ Firebase nếu bạn lưu ảnh trong bộ nhớ trong
+                step.setImage(fileNameStep);  // Lưu tên file ảnh
+
+                // Gọi phương thức insert vào cơ sở dữ liệu
+                db.stepDAO().insertStep(step);
+            } else {
+            }
+        }
+
+        Toast.makeText(this, "Thêm món ăn thành công", Toast.LENGTH_SHORT).show();
+        recreate();
+
 
     }
 
@@ -546,4 +717,84 @@ public class CreateRecipe extends AppCompatActivity {
         // Tạo bitmap mới với kích thước nhỏ hơn
         return Bitmap.createScaledBitmap(bitmap, maxWidth, (int) (height * scale), true);
     }
+
+    private void uploadImageToFirebase(Uri fileUri, final OnImageUploadCompleteListener listener) {
+        if (fileUri != null) {
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReference();
+
+            // Tạo một tên file duy nhất cho ảnh
+            String fileName = "steps_images/" + UUID.randomUUID().toString();
+
+            // Tham chiếu tới vị trí lưu ảnh trong Firebase Storage
+            StorageReference fileRef = storageRef.child(fileName);
+
+            fileRef.putFile(fileUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Khi tải ảnh lên thành công, lấy URL của ảnh
+                        fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String downloadUrl = uri.toString();
+                            listener.onImageUploadComplete(downloadUrl); // Trả về URL cho listener
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("Firebase", "Failed to upload image", e);
+                        listener.onImageUploadComplete(null); // Nếu lỗi thì trả về null
+                    });
+        }
+    }
+
+    public interface OnImageUploadCompleteListener {
+        void onImageUploadComplete(String imageUrl);
+    }
+
+    private Uri getImageUriFromImageButton(ImageButton imageButton) {
+        // Lấy URI từ Tag của ImageButton
+        String uriString = (String) imageButton.getTag();
+        return uriString != null ? Uri.parse(uriString) : null;
+    }
+
+    private Bitmap getBitmapFromImageButton(ImageButton imageButton) {
+        Drawable drawable = imageButton.getDrawable();
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+        return null;
+    }
+
+    private void saveImageToFile(Bitmap bitmap, Context context, String fileName) {
+        FileOutputStream fos = null;
+        try {
+            // Tạo file trong thư mục riêng của ứng dụng
+            File directory = context.getFilesDir();  // Thư mục này là private của app
+            File file = new File(directory, fileName);  // Tạo file với tên tùy chọn
+
+            // Mở FileOutputStream để ghi dữ liệu vào file
+            fos = new FileOutputStream(file);
+
+            // Chuyển Bitmap thành định dạng PNG và lưu vào file
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+
+            // Đảm bảo ghi toàn bộ dữ liệu
+            fos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean isDefaultImage(ImageButton imageButton) {
+        return imageButton.getDrawable().getConstantState().equals(
+                getResources().getDrawable(R.drawable.add_image).getConstantState()
+        );
+    }
+
+
 }
