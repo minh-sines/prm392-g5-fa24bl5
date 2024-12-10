@@ -13,13 +13,15 @@ import java.util.List;
 public interface RecipeDAO {
 
     @Insert
-    void insertRecipe(Recipe recipe);
+    long insertRecipe(Recipe recipe);
 
     @Update
     void updateRecipe(Recipe recipe);
 
-    @Query("SELECT * FROM Recipe")
+    @Query("SELECT * FROM Recipe WHERE [delete] = false")
     List<Recipe> getAllRecipes();
+    @Query("SELECT * FROM Recipe WHERE recipe_id = :id")
+    Recipe getRecipeById(int id);
 
     @Query("SELECT * FROM Recipe WHERE created_by = :id")
     List<Recipe> getAllRecipesByAccountId(int id);

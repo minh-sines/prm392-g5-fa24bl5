@@ -13,4 +13,13 @@ public interface FavoriteDAO {
     void insertFavorite(Favorite favorite);
     @Query("SELECT * FROM Favorite")
     List<Favorite> getAllFavorites();
+
+    @Query("SELECT * FROM Favorite WHERE user_id = :userId")
+    List<Favorite> getFavoritesByUserId(int userId);
+
+    @Query("SELECT COUNT(*) FROM favorite WHERE user_id = :userId AND recipe_id = :recipeId")
+    int isRecipeBookmarked(int userId, int recipeId);
+
+    @Query("DELETE FROM favorite WHERE user_id = :userId AND recipe_id = :recipeId")
+    void deleteFavorite(int userId, int recipeId);
 }

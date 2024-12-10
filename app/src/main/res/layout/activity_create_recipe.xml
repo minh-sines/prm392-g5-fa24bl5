@@ -20,6 +20,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/ic_image_add"
+            android:tag="default_image"
             android:scaleType="fitCenter"
             android:layout_marginBottom="16dp" />
 

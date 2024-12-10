@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -32,11 +33,13 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.firebase.storage)
     //roomu
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
@@ -44,7 +47,9 @@ dependencies {
     //fragment + bottom nav + tablayout
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
-
+    implementation("com.google.code.gson:gson:2.10.1")
+//    implementation ("com.google.firebase:firebase-storage:20.2.1")
+//    implementation ("com.google.firebase:firebase-database:20.2.3")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

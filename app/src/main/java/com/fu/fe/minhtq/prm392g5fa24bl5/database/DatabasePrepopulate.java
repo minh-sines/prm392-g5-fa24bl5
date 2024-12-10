@@ -46,9 +46,9 @@ public class DatabasePrepopulate extends AppCompatActivity {
     private void loadDatabase(View view) {
         AppDatabase instance = AppDatabase.getInstance(this);
         //would get duplicated if insert again
-//        instance.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
-//        instance.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
-//        instance.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
+        instance.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
+        instance.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
+        instance.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe1_1", "", "", 1, 0, 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe1_2", "", "", 1, 0, 0));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe1_3","", "",1, 0,0));
