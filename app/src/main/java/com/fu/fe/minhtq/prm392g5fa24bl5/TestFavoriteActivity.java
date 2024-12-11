@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fu.fe.minhtq.prm392g5fa24bl5.favorites.RecipeFavAdapter;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 
 import java.util.ArrayList;
