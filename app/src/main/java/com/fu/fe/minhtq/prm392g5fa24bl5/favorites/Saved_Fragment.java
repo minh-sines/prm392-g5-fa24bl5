@@ -1,6 +1,7 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.favorites;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
+import com.fu.fe.minhtq.prm392g5fa24bl5.manage.recipe.CreateRecipe;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -42,10 +44,9 @@ public class Saved_Fragment extends Fragment {
     }
 
     private void onClickFab(View view) {
-        Toast.makeText(getActivity(), "Clicked add new recipe", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(getActivity(), TestRecyclerViewActivity.class);
-//        intent.putExtra("test", "test");
-//        startActivity(intent);
+        Toast.makeText(getActivity(), "Add your new recipe !", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), CreateRecipe.class);
+        startActivity(intent);
     }
 
     private void fillData()
