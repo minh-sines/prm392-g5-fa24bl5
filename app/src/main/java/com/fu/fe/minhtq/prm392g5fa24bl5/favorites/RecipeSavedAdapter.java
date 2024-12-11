@@ -7,22 +7,28 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
 import com.fu.fe.minhtq.prm392g5fa24bl5.manage.recipe.DetailRecipe;
+import com.fu.fe.minhtq.prm392g5fa24bl5.manage.recipe.UpdateRecipe;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.*;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -71,6 +77,8 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecipeSavedAdapter.
 
         TextView recipe_id;
 
+        private Button btnCartMenu;
+
         public RecipeSavedViewHolder(@NonNull View itemView) {
             super(itemView);
             titleView = itemView.findViewById(R.id.fragment_2_2_title);
@@ -81,12 +89,14 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecipeSavedAdapter.
             recipe_id = itemView.findViewById(R.id.fragment_2_2_id);
             //hide ID
             recipe_id.setVisibility(View.GONE);
+            btnCartMenu = itemView.findViewById(R.id.btnSocialCartMenu);
             bindingAction();
         }
 
         private void bindingAction() {
             AppDatabase instance = AppDatabase.getInstance(itemView.getContext());
             itemView.setOnClickListener(this::onClickItem);
+            btnCartMenu.setOnClickListener(this::onBtnCartMenuClick);
             shareButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
@@ -100,6 +110,46 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecipeSavedAdapter.
                     });
                 }
             });
+        }
+
+        private void onBtnCartMenuClick(View view) {
+            PopupMenu popupMenu = new PopupMenu(itemView.getContext(), view);
+            popupMenu.getMenuInflater().inflate(R.menu.popup_saved_recipe, popupMenu.getMenu());
+
+            // Ép buộc hiển thị icon
+            try {
+                Field field = popupMenu.getClass().getDeclaredField("mPopup");
+                field.setAccessible(true);
+                Object menuHelper = field.get(popupMenu);
+                Class<?> classPopupHelper = Class.forName(menuHelper.getClass().getName());
+                Method setForceIcons = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                setForceIcons.invoke(menuHelper, true);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            popupMenu.setOnMenuItemClickListener(this::onMenuItemClick);
+            popupMenu.show();
+        }
+
+        private boolean onMenuItemClick(MenuItem menuItem) {
+            if (menuItem.getItemId() == R.id.edit_post) {
+                //Code
+                Toast.makeText(itemView.getContext(), "Edit recipe " + Integer.parseInt(recipe_id.getText().toString()), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(itemView.getContext(), UpdateRecipe.class);
+                intent.putExtra("recipeId", Integer.parseInt(recipe_id.getText().toString()));
+                itemView.getContext().startActivity(intent);
+                return true;
+            } else if (menuItem.getItemId() == R.id.delete_post) {
+                //Code
+                Toast.makeText(itemView.getContext(), "Show recipe detail " + Integer.parseInt(recipe_id.getText().toString()), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(itemView.getContext(), DetailRecipe.class);
+                intent.putExtra("recipeId", Integer.parseInt(recipe_id.getText().toString()));
+                itemView.getContext().startActivity(intent);
+                return true;
+            }
+            return false;
         }
 
         private void onClickItem(View view) {

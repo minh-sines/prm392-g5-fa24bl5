@@ -93,6 +93,24 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/fragment_2_2_image" />
 
+            <Button
+                android:id="@+id/btnSocialCartMenu"
+                android:layout_width="32dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="7dp"
+                android:backgroundTint="#00FFFFFF"
+                android:paddingLeft="5dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
+                app:icon="@drawable/ic_cart_item"
+                app:iconPadding="0dp"
+                app:iconSize="24dp"
+                app:iconTint="#646464"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
