@@ -8,7 +8,7 @@
     android:background="#EDEAEA"
     tools:context=".HomePage.HomePage">
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvPopur"
+        android:id="@+id/rcvSearch"
         android:layout_width="0dp"
         android:layout_height="210dp"
         android:layout_marginStart="1dp"
@@ -29,39 +29,45 @@
         android:scrollbarSize="4dp"
         android:text="Món ăn phổ biến"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/rcvPopur"
+        app:layout_constraintBottom_toTopOf="@+id/rcvSearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.611" />
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <ImageButton
+        android:id="@+id/btnPopu"
         android:layout_width="76dp"
         android:layout_height="41dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/rcvPopur"
+        android:background="#EDEAEA"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/rcvSearch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         app:layout_constraintVertical_bias="0.62"
         app:srcCompat="@drawable/arrow" />
 
 
-    <ImageView
-        android:id="@+id/imageView4"
+    <ImageButton
+        android:id="@+id/btnNew"
         android:layout_width="76dp"
         android:layout_height="41dp"
         android:layout_marginEnd="4dp"
+        android:background="#EDEAEA"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@+id/recyclerFoodNew"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/arrow" />
 
-    <ImageView
-        android:id="@+id/imageView5"
+    <ImageButton
+        android:id="@+id/btnShare"
         android:layout_width="76dp"
         android:layout_height="41dp"
         android:layout_marginEnd="4dp"
+        android:background="#EDEAEA"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@+id/recyclerFoodShare"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/arrow" />
@@ -89,7 +95,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rcvPopur" />
+        app:layout_constraintTop_toBottomOf="@+id/rcvSearch" />
 
     <TextView
         android:id="@+id/textView4"
@@ -175,7 +181,7 @@
 
     <LinearLayout
         android:background="@drawable/searchbox"
-        android:layout_width="370dp"
+        android:layout_width="410dp"
         android:layout_height="65dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -185,13 +191,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <ImageView
-            android:id="@+id/search_icon"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:src="@drawable/search"
+        <ImageButton
+            android:id="@+id/btnsearch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="30dp"
-            />
+            android:background="@android:color/white"
+
+            android:scaleType="fitCenter"
+            android:src="@drawable/search" />
+
 
         <EditText
             android:id="@+id/search_box"

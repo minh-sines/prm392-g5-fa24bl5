@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,29 +15,27 @@ import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 
 import java.io.File;
 
-public class ItemViewHolder extends RecyclerView.ViewHolder {
+public class PopurViewHolder extends RecyclerView.ViewHolder{
     private ImageView imgItem;
-    private TextView txtItem;
     private void bindingView(){
-        imgItem = itemView.findViewById(R.id.imgItemFood);
-        txtItem = itemView.findViewById(R.id.txtItemFood);
+        imgItem = itemView.findViewById(R.id.imgItemFood2);
     }
-    public ItemViewHolder(@NonNull View itemView){
+    public PopurViewHolder(@NonNull View itemView) {
         super(itemView);
         bindingView();
         bindingAction();
     }
+
     private void bindingAction(){
         itemView.setOnClickListener(this:: onClickItemFood);
     }
 
     private void onClickItemFood(View view) {
-        Toast.makeText(itemView.getContext(), txtItem.getText(), Toast.LENGTH_SHORT).show();
-    }
+        Toast.makeText(itemView.getContext(), "Click", Toast.LENGTH_SHORT).show();
 
+    }
     public void setData(Recipe item) {
         loadImageToImageView(item.mainImage, itemView.getContext(), imgItem);
-        txtItem.setText(item.title);
     }
     private void loadImageToImageView(String fileName, Context context, ImageView imageView) {
         try {
