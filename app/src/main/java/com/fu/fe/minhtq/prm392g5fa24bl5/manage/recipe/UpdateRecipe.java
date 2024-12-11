@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -77,6 +78,7 @@ public class UpdateRecipe extends AppCompatActivity {
     private static final int REQUEST_GALLERY_STEP_PERMISSION = 106;
     private static final int REQUEST_PERMISSIONS = 100;
 
+    private Button btnDeleteDish;
     private int selectedImageStepIndex = -1;
     private int countDeleteStep = 0;
     private Button btnAddDish;
@@ -137,7 +139,7 @@ public class UpdateRecipe extends AppCompatActivity {
         btnAddStep = findViewById(R.id.btnAddStep);
         listLayoutStep = findViewById(R.id.listLayoutStep);
         edtStep1 = findViewById(R.id.edtStep1);
-
+        btnDeleteDish = findViewById(R.id.btnDeleteDish);
 
         selectedImagesContainer = findViewById(R.id.selectedImagesContainer);
         btnAddImageStep = findViewById(R.id.btnAddImageStep);
@@ -176,6 +178,28 @@ public class UpdateRecipe extends AppCompatActivity {
         imgAddDescriptionImage.setOnClickListener(this::onButtonImageDescription);
         btnAddImageStep.setOnClickListener(this::onButtonImageStep);
         btnAddDish.setOnClickListener(this::onButtonCreateDish);
+        btnDeleteDish.setOnClickListener(this::onDeleteDish);
+    }
+
+    private void onDeleteDish(View view) {
+        // Tạo một AlertDialog để xác nhận việc xóa món ăn
+        new AlertDialog.Builder(this)
+                .setMessage("Bạn có chắc chắn muốn xóa món ăn này?")
+                .setCancelable(false) // Không cho phép đóng dialog bằng cách chạm ngoài vùng dialog
+                .setPositiveButton("Có", (dialog, which) -> {
+                    // Nếu người dùng chọn "Có", thực hiện xóa món ăn
+                    Recipe deleteRecipe = db.recipeDAO().getRecipeById(recipeId);
+                    deleteRecipe.setDelete(true);  // Đánh dấu món ăn là đã bị xóa (hoặc bạn có thể xóa trực tiếp trong DB)
+                    db.recipeDAO().updateRecipe(deleteRecipe);
+
+                    Toast.makeText(this, "Xóa món ăn thành công", Toast.LENGTH_SHORT).show();
+                    recreate(); // Tái tạo lại activity để cập nhật giao diện
+                })
+                .setNegativeButton("Không", (dialog, which) -> {
+                    // Nếu người dùng chọn "Không", chỉ cần đóng dialog và không làm gì
+                    dialog.dismiss();
+                })
+                .show();
     }
 
     private void onButtonCreateDish(View view) {
@@ -443,7 +467,7 @@ public class UpdateRecipe extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
-        recipeId = getIntent().getIntExtra("recipeId", 11);
+        recipeId = getIntent().getIntExtra("recipeId", 12);
         bindingView();
         bindingAction();
         initData();
@@ -1082,31 +1106,37 @@ public class UpdateRecipe extends AppCompatActivity {
     }
 
     private void saveImageToFile(Bitmap bitmap, Context context, String fileName) {
-        FileOutputStream fos = null;
-        try {
-            // Tạo file trong thư mục riêng của ứng dụng
-            File directory = context.getFilesDir();  // Thư mục này là private của app
-            File file = new File(directory, fileName);  // Tạo file với tên tùy chọn
+        ExecutorService executor = Executors.newSingleThreadExecutor();  // Tạo một Executor với một thread đơn
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                FileOutputStream fos = null;
+                try {
+                    // Tạo file trong thư mục riêng của ứng dụng
+                    File directory = context.getFilesDir();  // Thư mục này là private của app
+                    File file = new File(directory, fileName);  // Tạo file với tên tùy chọn
 
-            // Mở FileOutputStream để ghi dữ liệu vào file
-            fos = new FileOutputStream(file);
+                    // Mở FileOutputStream để ghi dữ liệu vào file
+                    fos = new FileOutputStream(file);
 
-            // Chuyển Bitmap thành định dạng PNG và lưu vào file
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    // Chuyển Bitmap thành định dạng PNG và lưu vào file
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 
-            // Đảm bảo ghi toàn bộ dữ liệu
-            fos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
+                    // Đảm bảo ghi toàn bộ dữ liệu
+                    fos.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (fos != null) {
+                            fos.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
+        });
     }
 
     private boolean isDefaultImage(ImageButton imageButton) {

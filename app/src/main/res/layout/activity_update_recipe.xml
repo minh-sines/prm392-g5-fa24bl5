@@ -212,6 +212,17 @@
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
             />
+        <Button
+            android:id="@+id/btnDeleteDish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:padding="12dp"
+            android:text="Xóa Món Ăn"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
 
         <Button
             android:id="@+id/btnDeleteDish"
