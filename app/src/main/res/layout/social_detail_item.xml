@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/background_social_cart">
+
+    <ImageView
+        android:id="@+id/ivSocialUserAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img" />
+
+    <TextView
+        android:id="@+id/tvSocialUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Nguyen Van A"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/ivSocialUserAvatar"
+        app:layout_constraintTop_toTopOf="@+id/ivSocialUserAvatar" />
+
+    <TextView
+        android:id="@+id/tvSocialDatePost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="4 ngày"
+        android:textColor="#747272"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSocialUserAvatar"
+        app:layout_constraintStart_toEndOf="@+id/ivSocialUserAvatar" />
+
+    <Button
+        android:id="@+id/btnSocialCartMenu"
+        android:layout_width="32dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="#00FFFFFF"
+        android:paddingLeft="5dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        app:icon="@drawable/ic_cart_item"
+        app:iconPadding="0dp"
+        app:iconSize="24dp"
+        app:iconTint="#646464"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSocialUserAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivSocialUserAvatar" />
+
+    <TextView
+        android:id="@+id/tvSocialDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="24dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSocialTitle" />
+
+    <Button
+        android:id="@+id/btnSocialSeeMore"
+        android:layout_width="70dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="#00FFFFFF"
+        android:padding="0dp"
+        android:text="Xem thêm"
+        android:textColor="#747272"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSocialDescription" />
+
+    <ImageView
+        android:id="@+id/ivSocialImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSocialSeeMore"
+        tools:srcCompat="@drawable/cutedog" />
+
+    <View
+        android:id="@+id/divide_social_view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#B3787878"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivSocialImage" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/divide_social_view">
+
+        <Button
+            android:id="@+id/btnSocialHeart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:text="12N"
+            android:textColor="@color/black"
+            app:iconPadding="0dp"
+            app:iconSize="20dp"
+            app:iconTint="#646464" />
+
+        <Button
+            android:id="@+id/btnSocialComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:text="100"
+            android:textColor="@color/black"
+            app:icon="@drawable/ic_comment"
+            app:iconPadding="0dp"
+            app:iconSize="20dp"
+            app:iconTint="#646464" />
+
+        <Button
+            android:id="@+id/btnSocialSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:text="25"
+            android:textColor="@color/black"
+            app:iconPadding="0dp"
+            app:iconSize="20dp"
+            app:iconTint="#646464" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvSocialTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivSocialUserAvatar" />
+</androidx.constraintlayout.widget.ConstraintLayout>
