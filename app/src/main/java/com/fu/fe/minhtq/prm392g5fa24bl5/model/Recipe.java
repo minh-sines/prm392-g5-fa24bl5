@@ -4,6 +4,9 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import java.util.List;
 
 @Entity(
         tableName = "recipe",
@@ -26,7 +29,14 @@ public class Recipe {
 
     public long created_at;
     public long updated_at;
-    public String image;
+
+    public String mainImage;
+
+
+
+    public Recipe() {
+    }
+
     public boolean is_published = false;
 
     public boolean delete = false;
@@ -35,15 +45,49 @@ public class Recipe {
     public int saveCount = 0;
     public int commentCount = 0;
 
-    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, String image) {
+    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, String mainImage) {
         this.title = title;
         this.description = description;
         this.time = time;
         this.created_by = created_by;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.image = image;
+        this.mainImage = mainImage;
     }
+
+//    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, boolean delete, String mainImage) {
+//        this.title = title;
+//        this.description = description;
+//        this.time = time;
+//        this.created_by = created_by;
+//        this.created_at = created_at;
+//        this.updated_at = updated_at;
+//        this.delete = delete;
+//        this.mainImage = mainImage;
+//    }
+
+    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, boolean delete) {
+        this.title = title;
+        this.description = description;
+        this.time = time;
+        this.created_by = created_by;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.delete = delete;
+    }
+
+    public void setCreated_by(int created_by) {
+        this.created_by = created_by;
+    }
+
+    public boolean isDelete() {
+        return delete;
+    }
+
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
     @Ignore
     public Recipe(String title, int created_by) {
         this.title = title;
@@ -51,14 +95,14 @@ public class Recipe {
     }
 
     @Ignore
-    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, String image, boolean is_published) {
+    public Recipe(String title, String description, String time, int created_by, long created_at, long updated_at, String mainImage, boolean is_published) {
         this.title = title;
         this.description = description;
         this.time = time;
         this.created_by = created_by;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.image = image;
+        this.mainImage = mainImage;
         this.is_published = is_published;
     }
 
@@ -118,13 +162,15 @@ public class Recipe {
         this.updated_at = updated_at;
     }
 
-    public String getImage() {
-        return image;
+    public String getMainImage() {
+        return mainImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
+
+ 
 
     public void setPublished(boolean is_published) {
         this.is_published = is_published;

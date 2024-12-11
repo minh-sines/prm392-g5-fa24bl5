@@ -18,12 +18,12 @@ public class Recipe_image {
     public int recipe_id;
     public String image;
 
-    public Recipe_image(int recipe_id, String image) {
-        this.recipe_id = recipe_id;
+    public Recipe_image(String image, int recipe_id) {
         this.image = image;
+        this.recipe_id = recipe_id;
     }
 
-        public int getRecipe_image_id() {
+    public int getRecipe_image_id() {
                 return recipe_image_id;
         }
 

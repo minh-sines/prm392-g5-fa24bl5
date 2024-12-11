@@ -1,11 +1,14 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.Login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,21 +17,37 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.fu.fe.minhtq.prm392g5fa24bl5.HomePage.HomePage;
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
+import com.fu.fe.minhtq.prm392g5fa24bl5.database.AccountDAO;
+import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Account;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText edtEmail, edtPassword;
     private Button btnLogin, btnForgotPassword, btnRegister, btnBack;
+    private CheckBox cbSaveAccount;
+    private TextView tvLoginError;
+    private AccountDAO accountDAO;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
 
     private void bindingView() {
         edtEmail = findViewById(R.id.edtLoginEmail);
         edtPassword = findViewById(R.id.edtLoginPassword);
 
         btnLogin = findViewById(R.id.btnLogin);
-        btnForgotPassword = findViewById(R.id.btnForgotPassword);
+        btnForgotPassword = findViewById(R.id.btnLoginForgotPassword);
         btnRegister = findViewById(R.id.btnRegister);
         btnBack = findViewById(R.id.btnLoginBack);
+
+        cbSaveAccount = findViewById(R.id.cbSaveAccount);
+        tvLoginError = findViewById(R.id.tvLoginError);
+
+        accountDAO = AppDatabase.getInstance(this).accountDAO();
+        pref = getSharedPreferences("DataPref", MODE_PRIVATE);
+        editor = pref.edit();
     }
 
     private void bindingAction() {
@@ -41,16 +60,30 @@ public class LoginActivity extends AppCompatActivity {
     private void onBtnLoginClick(View view) {
         String email = edtEmail.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
+        boolean saveAccount = cbSaveAccount.isChecked();
 
         if (validateLogin(email, password)) {
-            //Kiểm tra tài khoản đăng nhập
-
-            Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            Account account = accountDAO.getAccountForLogin(email, password);
+            if (account == null) {
+                tvLoginError.setVisibility(View.VISIBLE);
+                Toast.makeText(this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
+            } else {
+                if (saveAccount) {
+                    editor.putBoolean("isLogin", true);
+                    editor.putString("email", email);
+                    editor.apply();
+                }
+                Intent i = new Intent(this, HomePage.class);
+                startActivity(i);
+                finish();
+                Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            }
         }
-
     }
 
     private boolean validateLogin(String email, String password) {
+        tvLoginError.setVisibility(View.GONE);
+
         if (TextUtils.isEmpty(email)) {
             edtEmail.setError("Vui lòng nhập email!");
             edtEmail.requestFocus();
@@ -74,7 +107,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onBtnForgotPasswordClick(View view) {
-
+        Intent i = new Intent(this, ForgotPassword.class);
+        startActivity(i);
+        finish();
     }
 
     private void onBtnRegisterClick(View view) {
@@ -99,6 +134,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         bindingView();
+        if (pref.getBoolean("isLogin", false)) {
+            Intent i = new Intent(this, HomePage.class);
+            startActivity(i);
+            finish();
+        }
         bindingAction();
     }
 }

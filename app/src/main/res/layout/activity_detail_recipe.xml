@@ -1,0 +1,260 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Phần Hình ảnh -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <!-- Hình ảnh lớn -->
+            <ImageView
+                android:id="@+id/main_img"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add_image_32" />
+
+
+            <!-- Nút Xóa -->
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_delete"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="Delete"
+                android:tint="#FFFFFF" />
+
+            <!-- Nút Chỉnh sửa -->
+            <Button
+                android:id="@+id/btn_edit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_toStartOf="@id/btn_delete"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_delete"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="Edit"
+                android:tint="#FFFFFF" />
+
+        <!-- Icon "tim" -->
+        <LinearLayout
+            android:id="@+id/like_icon_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/like_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_delete" />
+
+            <TextView
+                android:id="@+id/like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="10"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Icon "comment" -->
+            <LinearLayout
+                android:id="@+id/comment_icon_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/like_icon_layout"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="95dp"
+                android:layout_marginEnd="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/comment_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_delete" />
+
+                <TextView
+                    android:id="@+id/comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+            <!-- RecyclerView chứa các hình ảnh mô tả -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewImageGallery"
+                android:layout_width="237dp"
+                android:layout_height="90dp"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Icon Bookmark nằm bên phải RecyclerView -->
+            <ImageView
+                android:id="@+id/bookmarkIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="60dp"
+                android:src="@drawable/bookmark_1"
+                android:contentDescription="Bookmark"/>
+
+        </LinearLayout>
+
+        <!-- Tên món ăn -->
+        <TextView
+            android:id="@+id/recipe_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Gà hấp lá chanh"
+            android:textColor="#669900"
+            android:textSize="24sp"
+             />
+        <!-- Thanh kẻ ngang -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#CCCCCC" /> <!-- Màu xám nhạt cho đường kẻ -->
+
+        <!-- Mô tả ngắn -->
+        <TextView
+            android:id="@+id/recipe_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Bữa cơm gia đình của người Việt Nam không thể thiếu những món kho thơm lừng đậm đà, các bạn hãy vào bếp cùng mình làm món gà kho lá chanh nhé"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#CCCCCC" /> <!-- Màu xám nhạt cho đường kẻ -->
+        <!-- Thời gian nấu -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginStart="137dp">
+
+            <ImageView
+                android:id="@+id/time_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_clock" />
+
+            <TextView
+                android:id="@+id/time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="60 phút"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#CCCCCC" /> <!-- Màu xám nhạt cho đường kẻ -->
+
+        <!-- Tiêu đề phần nguyên liệu -->
+        <TextView
+            android:id="@+id/ingredients_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Nguyên liệu"
+            android:textColor="#669900"
+            android:textSize="24sp" />
+
+        <!-- Danh sách nguyên liệu -->
+        <TextView
+            android:id="@+id/ingredients_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Thịt gà tươi, lá chanh, muối tiêu"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
+        <!-- Tiêu đề các bước thực hiện -->
+        <TextView
+            android:id="@+id/steps_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Các bước thực hiện"
+            android:textColor="#669900"
+            android:textSize="24sp" />
+
+        <!-- Danh sách các bước -->
+        <LinearLayout
+            android:id="@+id/steps_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+<!--            <TextView-->
+<!--                android:id="@+id/step_1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:text="Bước 1: abc"-->
+<!--                android:textColor="#666666"-->
+<!--                android:textSize="14sp" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/step_2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:text="Bước 2: xyz"-->
+<!--                android:textColor="#666666"-->
+<!--                android:textSize="14sp" />-->
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

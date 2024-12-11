@@ -20,17 +20,16 @@ public class Step {
     public int recipe_id;
     public int number;
     public String detail;
-    public int image;
+    public String image;
 
-    public int is_deleted;
+    public Step() {
+    }
 
-    public Step(int recipe_id, int number, String detail, int image, int is_deleted) {
+    public Step(int recipe_id, int number, String detail, String image) {
         this.recipe_id = recipe_id;
         this.number = number;
         this.detail = detail;
         this.image = image;
-        this.is_deleted = is_deleted;
-
     }
 
     public int getStep_id() {
@@ -65,15 +64,11 @@ public class Step {
         this.detail = detail;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
-    }
-
-    public int getIs_deleted() {
-        return is_deleted;
     }
 }

@@ -13,9 +13,14 @@ import java.util.List;
 public interface HeartDAO {
     @Insert
     void insertHeart(Heart heart);
+
     @Query("SELECT * FROM Heart")
     List<Heart> getAllHeart();
-    @Query("SELECT exists(Select 1 from Heart where user_id = :userId and recipe_id = :recipeId)")
+
+    @Query("SELECT * FROM Heart WHERE recipe_id = :recipeId")
+    List<Heart> getHeartsByRecipeId(int recipeId);
+
+    @Query("Select 1 from Heart where user_id = :userId and recipe_id = :recipeId")
     boolean isHeart(int userId, int recipeId);
 
     @Query("DELETE FROM Heart WHERE user_id = :userId AND recipe_id = :recipeId")

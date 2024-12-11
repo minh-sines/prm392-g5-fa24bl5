@@ -47,7 +47,7 @@ public class RecipeFavAdapter extends RecyclerView.Adapter<RecipeFavAdapter.Reci
         holder.timeView.setText(recipeList.get(position).getTime());
 //        holder.imageView.setImageResource(recipeList.get(position).getImage());
         holder.recipe_id.setText(String.valueOf(recipeList.get(position).getRecipe_id()));
-        holder.loadImageToImageView(recipeList.get(position).getImage(), context, holder.imageView);
+        holder.loadImageToImageView(recipeList.get(position).getMainImage(), context, holder.imageView);
     }
 
 

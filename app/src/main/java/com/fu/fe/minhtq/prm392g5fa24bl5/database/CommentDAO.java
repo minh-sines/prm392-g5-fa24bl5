@@ -18,6 +18,8 @@ public interface CommentDAO {
 
     @Query("SELECT * FROM Comment where recipe_id = :recipeId")
     List<Comment> getAllCommentsByRecipeId(int recipeId);
+    @Query("SELECT * FROM Comment where recipe_id = :recipeId ORDER BY created_at DESC")
+    List<Comment> getCommentsByRecipeIdOrderByDate(int recipeId);
 
     @Query("DELETE FROM Comment WHERE comment_id = :commentId")
     void deleteComment(int commentId);

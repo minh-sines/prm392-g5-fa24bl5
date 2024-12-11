@@ -50,4 +50,25 @@
         <item name="android:text">Tôi đồng ý nhận các bản tin về gợi ý  món ngon, cách làm hay và những thông tin khác từ Cookedat 12h50pm.</item>
         <item name="android:paddingStart">8dp</item>
     </style>
+
+    <style name="customTextError">
+        <item name="android:textColor">#FF0000</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="customSocialBtnCreateRecipe">
+        <item name="android:background">@drawable/input_social_background</item>
+        <item name="android:textColor">#787878</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="customBtnAddComment">
+        <item name="android:background">@drawable/input_comment_background</item>
+        <item name="android:hint">Thêm bình luận</item>
+        <item name="android:textColorHint">#7C7C7C</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:inputType">text</item>
+    </style>
 </resources>

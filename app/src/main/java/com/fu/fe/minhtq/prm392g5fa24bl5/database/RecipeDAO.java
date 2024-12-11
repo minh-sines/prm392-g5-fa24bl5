@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.*;
 
@@ -13,11 +14,20 @@ import java.util.List;
 public interface RecipeDAO {
 
     @Insert
-    void insertRecipe(Recipe recipe);
+    long insertRecipe(Recipe recipe);
 
-    @Query("SELECT * FROM Recipe")
+    @Update
+    void updateRecipe(Recipe recipe);
+
+    @Query("SELECT * FROM Recipe WHERE [delete] = 0")
     List<Recipe> getAllRecipes();
 
+    @Query("SELECT * FROM Recipe WHERE recipe_id = :id")
+    Recipe getRecipeById(int id);
+
+    @Query("SELECT * FROM Recipe WHERE title LIKE :query")
+    List<Recipe> searchRecipesByTitle(String query);
+    
     @Query("SELECT * FROM Recipe WHERE created_by = :id and  [delete] = false")
     List<Recipe> getAllRecipesByAccountId(int id);
 
@@ -33,6 +43,7 @@ public interface RecipeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRecipesList(List<Recipe> recipes);
 
-
+    @Query("SELECT * FROM Recipe ORDER BY created_at ASC")
+    List<Recipe> getRecipeByDate();
 
 }

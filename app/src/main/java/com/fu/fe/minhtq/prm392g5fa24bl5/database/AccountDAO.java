@@ -23,4 +23,12 @@ public interface AccountDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAccountsList(List<Account> accounts);
 
+    @Query("SELECT * FROM Account WHERE email = :email AND password = :password")
+    Account getAccountForLogin(String email, String password);
+
+    @Query("SELECT * FROM Account WHERE email = :email")
+    Account getAccountByEmail(String email);
+
+    @Query("UPDATE Account SET password = :password WHERE email = :email")
+    void updatePassword(String email, String password);
 }

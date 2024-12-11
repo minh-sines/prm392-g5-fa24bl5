@@ -23,6 +23,9 @@ public interface FavoriteDAO {
 
     @Query("DELETE FROM Favorite WHERE user_id = :userId AND recipe_id = :recipeId")
     void deleteFavorite(int userId, int recipeId);
+    
+    @Query("SELECT * FROM Favorite WHERE recipe_id = :recipeId")
+    List<Favorite> getFavoritesByRecipeId(int recipeId);
 
     @Query("SELECT exists(Select 1 from Favorite where user_id = :userId and recipe_id = :recipeId)")
     boolean isFavorite(int userId, int recipeId);
