@@ -225,7 +225,7 @@ public class DetailRecipe extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
-        recipeId = getIntent().getIntExtra("recipeId", 28);
+        recipeId = getIntent().getIntExtra("recipeId", 11);
 
         bindingView();
         bindingAction();

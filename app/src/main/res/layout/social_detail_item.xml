@@ -36,8 +36,8 @@
         android:layout_marginStart="24dp"
         android:text="4 ngày"
         android:textColor="#747272"
-        app:layout_constraintBottom_toBottomOf="@+id/ivSocialUserAvatar"
-        app:layout_constraintStart_toEndOf="@+id/ivSocialUserAvatar" />
+        app:layout_constraintStart_toEndOf="@+id/ivSocialUserAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/tvSocialUsername" />
 
     <Button
         android:id="@+id/btnSocialCartMenu"

@@ -1,8 +1,11 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.favorites;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
+import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
+import com.fu.fe.minhtq.prm392g5fa24bl5.manage.recipe.DetailRecipe;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.*;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class RecipeSavedAdapter extends RecyclerView.Adapter<RecipeSavedAdapter.RecipeSavedViewHolder> {
     private final Context context;
@@ -40,7 +46,7 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecipeSavedAdapter.
     public void onBindViewHolder(@NonNull RecipeSavedAdapter.RecipeSavedViewHolder holder, int position) {
         holder.titleView.setText(recipeList.get(position).getTitle());
         holder.ingredientView.setText(recipeList.get(position).getDescription());
-        holder.stepView.setText(recipeList.get(position).getTime());
+        holder.stepView.setText("Prepare time: " + recipeList.get(position).getTime());
         //        holder.imageView.setImageResource(recipeList.get(position).getImage());
         holder.loadImageToImageView(recipeList.get(position).getMainImage(), context, holder.imageView);
         holder.recipe_id.setText(String.valueOf(recipeList.get(position).getRecipe_id()));
@@ -79,17 +85,28 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecipeSavedAdapter.
         }
 
         private void bindingAction() {
+            AppDatabase instance = AppDatabase.getInstance(itemView.getContext());
             itemView.setOnClickListener(this::onClickItem);
             shareButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(itemView.getContext(), "Share button clicked on "+titleView.getText() + " " + Integer.parseInt(recipe_id.getText().toString()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(itemView.getContext(), "Share button click on "+titleView.getText() + " " + Integer.parseInt(recipe_id.getText().toString()), Toast.LENGTH_SHORT).show();
+                    Executors.newSingleThreadExecutor().execute(() -> {
+                        instance.recipeDAO().setPublishRecipe(Integer.parseInt(recipe_id.getText().toString()),System.currentTimeMillis());
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            // Update UI or refresh data back to mainthread
+                            Toast.makeText(itemView.getContext(), "Share button clicked on "+titleView.getText() + " " + Integer.parseInt(recipe_id.getText().toString()), Toast.LENGTH_SHORT).show();
+                        });
+                    });
                 }
             });
         }
 
         private void onClickItem(View view) {
             Toast.makeText(itemView.getContext(), "Item clicked on "+titleView.getText() + " " + Integer.parseInt(recipe_id.getText().toString()), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(itemView.getContext(), DetailRecipe.class);
+            intent.putExtra("recipeId", Integer.parseInt(recipe_id.getText().toString()));
+            itemView.getContext().startActivity(intent);
         }
 
         private void loadImageToImageView(String fileName, Context context, ImageView imageView) {

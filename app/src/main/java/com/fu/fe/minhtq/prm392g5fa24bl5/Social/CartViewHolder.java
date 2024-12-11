@@ -2,6 +2,7 @@ package com.fu.fe.minhtq.prm392g5fa24bl5.Social;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.MenuItem;
@@ -16,11 +17,14 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
+import com.fu.fe.minhtq.prm392g5fa24bl5.database.AccountDAO;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.CommentDAO;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.FavoriteDAO;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.HeartDAO;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.RecipeDAO;
+import com.fu.fe.minhtq.prm392g5fa24bl5.manage.recipe.DetailRecipe;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Account;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Favorite;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Heart;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
@@ -46,12 +50,17 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
     private Button btnSave;
     private Button btnCartMenu;
     private RecipeDAO recipeDAO;
+    private AccountDAO accountDAO;
     private HeartDAO heartDAO;
     private CommentDAO commentDAO;
     private FavoriteDAO favoriteDAO;
     private Recipe recipe;
 
+
     public void setRecipe(Recipe r) {
+        Account account = accountDAO.getAccountById(r.getCreated_by());
+        ivUserAvatar.setImageResource(R.drawable.img);
+//        ivUserAvatar.setImageResource(account.getAvatar());
         tvUsername.setText("Nguyễn Văn A"); // fix cứng
         tvDatePost.setText(formatDate(r.created_at));
         tvTitle.setText(r.getTitle());
@@ -61,7 +70,6 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         btnHeart.setText(heartDAO.getHeartsByRecipeId(r.recipe_id).size() + "");
         //fix cứng user
         if (heartDAO.isHeart(2, r.recipe_id)) {
-            //thay đổi icon nhưng chưa được
             btnHeart.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_fill, 0, 0, 0);
         } else {
             btnHeart.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_round, 0, 0, 0);
@@ -74,6 +82,13 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
             btnSave.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_save_fill, 0, 0, 0);
         } else {
             btnSave.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_save_round, 0, 0, 0);
+        }
+
+        SharedPreferences pref = itemView.getContext().getSharedPreferences("DataPref", Context.MODE_PRIVATE);
+        if (pref.getInt("user_id", 0) == r.getCreated_by()) {
+            btnCartMenu.setVisibility(View.VISIBLE);
+        } else {
+            btnCartMenu.setVisibility(View.GONE);
         }
 
         recipe = r;
@@ -105,9 +120,9 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         btnCartMenu = itemView.findViewById(R.id.btnSocialCartMenu);
 
         recipeDAO = AppDatabase.getInstance(itemView.getContext()).recipeDAO();
+        accountDAO = AppDatabase.getInstance(itemView.getContext()).accountDAO();
         heartDAO = AppDatabase.getInstance(itemView.getContext()).heartDAO();
         commentDAO = AppDatabase.getInstance(itemView.getContext()).commentDAO();
-        favoriteDAO = AppDatabase.getInstance(itemView.getContext()).favoriteDAO();
     }
 
     private void bindingAction() {
@@ -120,7 +135,8 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void onBtnSeeMoreClick(View view) {
-        Intent i = new Intent(); //view.getContext(), SocialDetailActivity.class
+        Intent i = new Intent(view.getContext(), DetailRecipe.class);
+        i.putExtra("recipeId", recipe.recipe_id);
         view.getContext().startActivity(i);
     }
 

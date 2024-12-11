@@ -89,28 +89,30 @@
 
             <!-- Dòng nguyên liệu đầu tiên -->
             <LinearLayout
+                android:id="@+id/linearIngre1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
+                android:orientation="horizontal">
 
                 <EditText
+                    android:id="@+id/edtIngr1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="Nhập nguyên liệu"
                     android:background="@android:drawable/edit_text"
+                    android:hint="Nhập nguyên liệu"
                     android:padding="8dp" />
 
                 <ImageButton
                     android:id="@+id/btnAddIngredient"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_add"
-                    android:background="@null"
                     android:layout_marginStart="8dp"
-                    android:contentDescription="Add ingredient" />
+                    android:background="@null"
+                    android:contentDescription="Add ingredient"
+                    android:src="@drawable/ic_add" />
             </LinearLayout>
         </LinearLayout>
 
@@ -211,14 +213,36 @@
             android:orientation="horizontal"
             />
         <Button
+            android:id="@+id/btnDeleteDish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:padding="12dp"
+            android:text="Xóa Món Ăn"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+
+        <Button
+            android:id="@+id/btnDeleteDish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:padding="12dp"
+            android:text="Xóa Món Ăn"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+        <Button
             android:id="@+id/btnCreateDish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Thêm Món Ăn"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
             android:backgroundTint="@android:color/holo_blue_dark"
-            android:padding="12dp" />
+            android:padding="12dp"
+            android:text="Lưu Món Ăn"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
     </LinearLayout>
 </ScrollView>

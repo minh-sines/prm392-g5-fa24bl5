@@ -1,5 +1,8 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.Social;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +20,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
+import com.fu.fe.minhtq.prm392g5fa24bl5.database.AccountDAO;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.CommentDAO;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.RecipeDAO;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Account;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Comment;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 
+import java.io.File;
 import java.util.List;
 
 public class AddComment extends AppCompatActivity {
@@ -38,6 +44,7 @@ public class AddComment extends AppCompatActivity {
     private List<Comment> data;
     private RecipeDAO recipeDAO;
     private CommentDAO commentDAO;
+    private AccountDAO accountDAO;
 
     private void bindingView() {
         ivCommentImage = findViewById(R.id.ivCommentImage);
@@ -50,12 +57,17 @@ public class AddComment extends AppCompatActivity {
 
         commentDAO = AppDatabase.getInstance(this).commentDAO();
         recipeDAO = AppDatabase.getInstance(this).recipeDAO();
+        accountDAO = AppDatabase.getInstance(this).accountDAO();
 
         recipeId = getIntent().getIntExtra("recipe_id", 0);
         data = commentDAO.getCommentsByRecipeIdOrderByDate(recipeId);
         Recipe recipe = recipeDAO.getRecipeById(recipeId);
+        Account account = accountDAO.getAccountById(recipe.getCreated_by());
 
-//        ivCommentImage.setImageResource(recipe.getImage());
+        loadImageToImageView(recipe.getMainImage(), this, ivCommentImage);
+//        ivCommentImage.setImageResource(R.drawable.cutedog);
+        ivCommentUser.setImageResource(R.drawable.img);
+//        ivCommentUser.setImageResource(account.getAvatar());
         tvCommentCount.setText(data.size() + " bình luận");
     }
 
@@ -113,5 +125,32 @@ public class AddComment extends AppCompatActivity {
         tvCommentCount.setText(data.size() + " bình luận");
 
         initRecyclerView();
+    }
+
+    private void loadImageToImageView(String fileName, Context context, ImageView imageView) {
+        try {
+            // Lấy thư mục private của ứng dụng
+            File directory = context.getFilesDir();
+
+            // Tạo đường dẫn tới file ảnh
+            File file = new File(directory, fileName);
+
+            // Kiểm tra xem file có tồn tại không
+            if (file.exists()) {
+                // Đọc ảnh từ file và chuyển thành Bitmap
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+
+                // Hiển thị ảnh trên ImageView
+                imageView.setImageBitmap(bitmap);
+            } else {
+                // Nếu file không tồn tại, đặt ảnh mặc định
+                imageView.setImageResource(R.drawable.default_recipe); // Đổi R.drawable.default_image thành ảnh mặc định của bạn
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Đặt ảnh mặc định nếu có lỗi
+            imageView.setImageResource(R.drawable.default_recipe);
+        }
     }
 }

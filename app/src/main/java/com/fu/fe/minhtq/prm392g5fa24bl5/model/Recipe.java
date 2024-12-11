@@ -170,7 +170,7 @@ public class Recipe {
         this.mainImage = mainImage;
     }
 
- 
+
 
     public void setPublished(boolean is_published) {
         this.is_published = is_published;

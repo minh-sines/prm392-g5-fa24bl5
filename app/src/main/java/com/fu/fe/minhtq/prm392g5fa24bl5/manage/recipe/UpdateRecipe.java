@@ -27,6 +27,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -77,6 +78,7 @@ public class UpdateRecipe extends AppCompatActivity {
     private static final int REQUEST_GALLERY_STEP_PERMISSION = 106;
     private static final int REQUEST_PERMISSIONS = 100;
 
+    private Button btnDeleteDish;
     private int selectedImageStepIndex = -1;
     private int countDeleteStep = 0;
     private Button btnAddDish;
@@ -85,6 +87,10 @@ public class UpdateRecipe extends AppCompatActivity {
     private Button btnCookingTime;
     private Button btnIngredients;
     private Button btnSteps;
+
+    private EditText edtStep1;
+
+    private EditText edtIngre1;
 
     private EditText edtDishName;
     private EditText edtDescription;
@@ -104,6 +110,7 @@ public class UpdateRecipe extends AppCompatActivity {
     private LinearLayout listLayoutStep;
     private RecyclerView selectedImagesContainer;
 
+    private LinearLayout linearIngre1;
     private LinearLayout imageContainerForStep;
     private int maxWidth;
 
@@ -128,8 +135,11 @@ public class UpdateRecipe extends AppCompatActivity {
 //        btnAddStep = findViewById(R.id.btnAddStep);
 //        btnDeleteStep = findViewById(R.id.btnDeleteStep);
         ingredientsContainer = findViewById(R.id.ingredientsContainer);
+        linearIngre1 = findViewById(R.id.linearIngre1);
         btnAddStep = findViewById(R.id.btnAddStep);
         listLayoutStep = findViewById(R.id.listLayoutStep);
+        edtStep1 = findViewById(R.id.edtStep1);
+        btnDeleteDish = findViewById(R.id.btnDeleteDish);
 
         selectedImagesContainer = findViewById(R.id.selectedImagesContainer);
         btnAddImageStep = findViewById(R.id.btnAddImageStep);
@@ -139,6 +149,7 @@ public class UpdateRecipe extends AppCompatActivity {
         int screenWidth = displayMetrics.widthPixels; // Chiều rộng màn hình
         listImgDescBitmap = new ArrayList<>();
         imgDescList = db.recipe_imageDAO().getImagePathsByRecipeId(recipeId);
+        edtIngre1 = findViewById(R.id.edtIngr1);
         for (int i = 0; i < imgDescList.size(); i++) {
             // Lấy thư mục private của ứng dụng
             File directory = this.getFilesDir();
@@ -167,6 +178,28 @@ public class UpdateRecipe extends AppCompatActivity {
         imgAddDescriptionImage.setOnClickListener(this::onButtonImageDescription);
         btnAddImageStep.setOnClickListener(this::onButtonImageStep);
         btnAddDish.setOnClickListener(this::onButtonCreateDish);
+        btnDeleteDish.setOnClickListener(this::onDeleteDish);
+    }
+
+    private void onDeleteDish(View view) {
+        // Tạo một AlertDialog để xác nhận việc xóa món ăn
+        new AlertDialog.Builder(this)
+                .setMessage("Bạn có chắc chắn muốn xóa món ăn này?")
+                .setCancelable(false) // Không cho phép đóng dialog bằng cách chạm ngoài vùng dialog
+                .setPositiveButton("Có", (dialog, which) -> {
+                    // Nếu người dùng chọn "Có", thực hiện xóa món ăn
+                    Recipe deleteRecipe = db.recipeDAO().getRecipeById(recipeId);
+                    deleteRecipe.setDelete(true);  // Đánh dấu món ăn là đã bị xóa (hoặc bạn có thể xóa trực tiếp trong DB)
+                    db.recipeDAO().updateRecipe(deleteRecipe);
+
+                    Toast.makeText(this, "Xóa món ăn thành công", Toast.LENGTH_SHORT).show();
+                    recreate(); // Tái tạo lại activity để cập nhật giao diện
+                })
+                .setNegativeButton("Không", (dialog, which) -> {
+                    // Nếu người dùng chọn "Không", chỉ cần đóng dialog và không làm gì
+                    dialog.dismiss();
+                })
+                .show();
     }
 
     private void onButtonCreateDish(View view) {
@@ -218,15 +251,15 @@ public class UpdateRecipe extends AppCompatActivity {
         }
 
 
-        Recipe recipe = new Recipe(
-                edtDishName.getText().toString(),
-                edtDescription.getText().toString(),
-                edtCookingTime.getText().toString(),
-                /* created_by */ 1, // ID người tạo (cần thay bằng ID thực tế nếu có)
-                System.currentTimeMillis(), // Thời gian tạo
-                System.currentTimeMillis(),  // Thời gian cập nhật
-                false // delete
-        );
+//        Recipe recipe = new Recipe(
+//                edtDishName.getText().toString(),
+//                edtDescription.getText().toString(),
+//                edtCookingTime.getText().toString(),
+//                /* created_by */ 1, // ID người tạo (cần thay bằng ID thực tế nếu có)
+//                System.currentTimeMillis(), // Thời gian tạo
+//                System.currentTimeMillis(),  // Thời gian cập nhật
+//                false // delete
+//        );
 
 
         // Thêm Recipe vào DB
@@ -234,7 +267,7 @@ public class UpdateRecipe extends AppCompatActivity {
 //        db.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
 //        db.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
 //        db.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
-        long recipeId = db.recipeDAO().insertRecipe(recipe);
+//        long recipeId = db.recipeDAO().insertRecipe(recipe);
         String fileName = "";
 
         Bitmap bitmap = ((BitmapDrawable) imgAddDish.getDrawable()).getBitmap();
@@ -245,11 +278,16 @@ public class UpdateRecipe extends AppCompatActivity {
             // Lưu ảnh vào bộ nhớ trong
             saveImageToFile(bitmap, UpdateRecipe.this, fileName);
 
-            recipe = db.recipeDAO().getRecipeById((int) recipeId);
+            updatedRecipe = db.recipeDAO().getRecipeById((int) recipeId);
 
-            recipe.setMainImage(fileName);
-            db.recipeDAO().updateRecipe(recipe);
-            Log.d("UpdateRecipe", "Updated recipe with ID: " + recipe.getMainImage());
+            updatedRecipe.setMainImage(fileName);
+            updatedRecipe.setUpdated_at(System.currentTimeMillis());
+            db.recipeDAO().updateRecipe(updatedRecipe);
+            Log.d("UpdateRecipe", "Updated recipe with ID: " + updatedRecipe.getMainImage());
+        }
+        List<Recipe_image> oldRecipeImages = db.recipe_imageDAO().getRecipe_imagesByRecipeId((int) recipeId);
+        for (Recipe_image oldRecipeImage : oldRecipeImages) {
+            db.recipe_imageDAO().deleteRecipe_image(oldRecipeImage);
         }
 
         if (listImgDescBitmap != null && !listImgDescBitmap.isEmpty()) {
@@ -284,6 +322,8 @@ public class UpdateRecipe extends AppCompatActivity {
 //        };
 
 
+        List<Ingredient> oldIngredients = db.ingredientDAO().getIngredientsByRecipeId((int) recipeId);
+        List<Ingredient> newIngredients = new ArrayList<>();
         // Lưu danh sách nguyên liệu
         for (int i = 0; i < ingredientsContainer.getChildCount(); i++) {
             LinearLayout ingredientRow = (LinearLayout) ingredientsContainer.getChildAt(i);
@@ -292,10 +332,47 @@ public class UpdateRecipe extends AppCompatActivity {
                     (int)recipeId,
                     ingredientInput.getText().toString()
             );
+            newIngredients.add(ingredient);
+//            db.ingredientDAO().insertIngredient(ingredient);
+        }
+        List<Ingredient> deletedIngredients = new ArrayList<>(oldIngredients);
+        for (Ingredient oldIngredient : oldIngredients) {
+            for (Ingredient newIngredient : newIngredients) {
+                if (oldIngredient.getName().equals(newIngredient.getName())) {
+                    deletedIngredients.remove(oldIngredient); // Nếu tồn tại trong danh sách mới, không bị xóa
+                    break;
+                }
+            }
+        }
+        List<Ingredient> addedIngredients = new ArrayList<>();
+        for (Ingredient newIngredient : newIngredients) {
+            boolean exists = false;
+            for (Ingredient oldIngredient : oldIngredients) {
+                if (newIngredient.getName().equals(oldIngredient.getName())) {
+                    exists = true; // Nếu đã tồn tại, không cần thêm
+                    break;
+                }
+            }
+            if (!exists) {
+                addedIngredients.add(newIngredient);
+            }
+        }
+        for (Ingredient ingredient : deletedIngredients) {
+            db.ingredientDAO().deleteIngredient(ingredient);
+        }
+
+        // Thêm nguyên liệu mới
+        for (Ingredient ingredient : addedIngredients) {
             db.ingredientDAO().insertIngredient(ingredient);
         }
 
 
+        List<Step> oldSteps = db.stepDAO().getStepsByRecipeId((int) recipeId);
+        for (Step oldStep : oldSteps) {
+            db.stepDAO().deleteStep(oldStep);
+        }
+
+        List<Step> newSteps = new ArrayList<>();
 
         // Lưu danh sách bước
         for (int i = 0; i < listLayoutStep.getChildCount(); i++) {
@@ -338,13 +415,17 @@ public class UpdateRecipe extends AppCompatActivity {
 
             // Lưu tên file vào database, thay vì URL từ Firebase nếu bạn lưu ảnh trong bộ nhớ trong
             step.setImage(fileNameStep);  // Lưu tên file ảnh
+//            newSteps.add(step);
+
+
+
 
             // Gọi phương thức insert vào cơ sở dữ liệu
             db.stepDAO().insertStep(step);
 
         }
 
-//        Toast.makeText(this, "Thêm món ăn thành công", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Sửa món ăn thành công", Toast.LENGTH_SHORT).show();
 //        Log.d("UpdateRecipe", "Updated recipe with ID: " + recipe.getMainImage());
 //
 //        Recipe recipe1 = db.recipeDAO().getRecipeById((int) recipeId);
@@ -380,13 +461,13 @@ public class UpdateRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_create_recipe);
+        setContentView(R.layout.activity_update_recipe);
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
 //            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
-        recipeId = getIntent().getIntExtra("recipeId", 28);
+        recipeId = getIntent().getIntExtra("recipeId", 12);
         bindingView();
         bindingAction();
         initData();
@@ -413,8 +494,8 @@ public class UpdateRecipe extends AppCompatActivity {
                 if (i > 0) {
                     addNewStepRow(step);
                 } else {
-                    
-                    if (step != null && step.getImage() != null) {
+                    edtStep1.setText(step.getDetail());
+                    if (step != null && step.getImage() != null && !step.getImage().isEmpty()) {
                         loadImageToImageView(step.getImage(), this, btnAddImageStep);
                     }
                 }
@@ -424,7 +505,19 @@ public class UpdateRecipe extends AppCompatActivity {
     }
 
     private void initIngredient() {
+        List<Ingredient> ingredients = db.ingredientDAO().getIngredientsByRecipeId(recipeId);
+        if (ingredients != null && !ingredients.isEmpty()) {
+            for (int i = 0; i < ingredients.size(); i++) {
+                Ingredient ingredient = ingredients.get(i);
 
+                // Nếu không phải nguyên liệu đầu tiên, thêm vào giao diện
+                if (i > 0) {
+                    addNewIngredientRow(ingredient.getName());
+                } else {
+                    edtIngre1.setText(ingredient.getName());
+                }
+            }
+        }
 
     }
 
@@ -827,7 +920,7 @@ public class UpdateRecipe extends AppCompatActivity {
         addImageButton.setContentDescription("Thêm ảnh cho bước " + stepCount);
         addImageButton.setPadding(4, 0, 0, 0);
         addImageButton.setTag(stepCount);
-        if (step != null && step.getImage() != null) {
+        if (step != null && step.getImage() != null && !step.getImage().isEmpty()) {
             loadImageToImageView(step.getImage(), this, addImageButton);
         }
         addImageButton.setOnClickListener(v -> {
@@ -1013,31 +1106,37 @@ public class UpdateRecipe extends AppCompatActivity {
     }
 
     private void saveImageToFile(Bitmap bitmap, Context context, String fileName) {
-        FileOutputStream fos = null;
-        try {
-            // Tạo file trong thư mục riêng của ứng dụng
-            File directory = context.getFilesDir();  // Thư mục này là private của app
-            File file = new File(directory, fileName);  // Tạo file với tên tùy chọn
+        ExecutorService executor = Executors.newSingleThreadExecutor();  // Tạo một Executor với một thread đơn
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                FileOutputStream fos = null;
+                try {
+                    // Tạo file trong thư mục riêng của ứng dụng
+                    File directory = context.getFilesDir();  // Thư mục này là private của app
+                    File file = new File(directory, fileName);  // Tạo file với tên tùy chọn
 
-            // Mở FileOutputStream để ghi dữ liệu vào file
-            fos = new FileOutputStream(file);
+                    // Mở FileOutputStream để ghi dữ liệu vào file
+                    fos = new FileOutputStream(file);
 
-            // Chuyển Bitmap thành định dạng PNG và lưu vào file
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    // Chuyển Bitmap thành định dạng PNG và lưu vào file
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 
-            // Đảm bảo ghi toàn bộ dữ liệu
-            fos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
+                    // Đảm bảo ghi toàn bộ dữ liệu
+                    fos.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (fos != null) {
+                            fos.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
+        });
     }
 
     private boolean isDefaultImage(ImageButton imageButton) {
