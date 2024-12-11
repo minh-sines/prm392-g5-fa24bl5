@@ -63,13 +63,7 @@ public class DetailRecipe extends AppCompatActivity {
         db = AppDatabase.getInstance(this);
         recipe = db.recipeDAO().getRecipeById(recipeId);
         mainImage = findViewById(R.id.main_img);
-        deleteButton = findViewById(R.id.btn_delete);
-        editButton = findViewById(R.id.btn_edit);
 
-        likeIcon = findViewById(R.id.like_icon);
-        commentIcon = findViewById(R.id.comment_icon);
-        likeCount = findViewById(R.id.like_count);
-        commentCount = findViewById(R.id.comment_count);
         recipeTitle = findViewById(R.id.recipe_title);
         recipeDescription = findViewById(R.id.recipe_description);
         bookmarkIcon = findViewById(R.id.bookmarkIcon);
@@ -225,7 +219,7 @@ public class DetailRecipe extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
-        recipeId = getIntent().getIntExtra("recipeId", 2);
+        recipeId = getIntent().getIntExtra("recipeId", 7);
 
         bindingView();
         bindingAction();

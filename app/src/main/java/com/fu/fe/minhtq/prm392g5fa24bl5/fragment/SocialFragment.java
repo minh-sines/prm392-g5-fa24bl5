@@ -102,4 +102,20 @@ public class SocialFragment extends Fragment {
         rcvSocialPost.setAdapter(adapter);
         rcvSocialPost.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Reload lại dữ liệu mỗi khi fragment quay lại
+        reloadRecyclerViewData();
+    }
+
+    private void reloadRecyclerViewData() {
+        // Lấy lại dữ liệu từ database
+        data = recipeDAO.getRecipeByDate();
+
+        // Cập nhật lại adapter với dữ liệu mới
+        CartAdapter adapter = new CartAdapter(data);
+        rcvSocialPost.setAdapter(adapter); // Gán lại adapter cho RecyclerView
+        adapter.notifyDataSetChanged(); // Thông báo cho adapter rằng dữ liệu đã thay đổi
+    }
 }

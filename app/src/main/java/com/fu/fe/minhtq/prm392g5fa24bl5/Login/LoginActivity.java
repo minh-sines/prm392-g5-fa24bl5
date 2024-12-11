@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.HomePage.HomePage;
+import com.fu.fe.minhtq.prm392g5fa24bl5.Home_of_5_fragment;
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.AccountDAO;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
@@ -73,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putInt("user_id", account.getAccount_id());
                     editor.apply();
                 }
-                Intent i = new Intent(this, HomePage.class);
+                Intent i = new Intent(this, Home_of_5_fragment.class);
                 i.putExtra("user_id", account.getAccount_id());
                 startActivity(i);
                 finish();

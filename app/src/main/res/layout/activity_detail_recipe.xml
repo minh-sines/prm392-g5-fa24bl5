@@ -26,87 +26,12 @@
 
 
             <!-- Nút Xóa -->
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/ic_delete"
-                android:src="@drawable/ic_delete"
-                android:contentDescription="Delete"
-                android:tint="#FFFFFF" />
 
             <!-- Nút Chỉnh sửa -->
-            <Button
-                android:id="@+id/btn_edit"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_toStartOf="@id/btn_delete"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/ic_delete"
-                android:src="@drawable/ic_delete"
-                android:contentDescription="Edit"
-                android:tint="#FFFFFF" />
 
-        <!-- Icon "tim" -->
-        <LinearLayout
-            android:id="@+id/like_icon_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            <!-- Icon "tim" -->
 
-            <ImageView
-                android:id="@+id/like_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_delete" />
-
-            <TextView
-                android:id="@+id/like_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="10"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- Icon "comment" -->
-            <LinearLayout
-                android:id="@+id/comment_icon_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/like_icon_layout"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="95dp"
-                android:layout_marginEnd="24dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/comment_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_delete" />
-
-                <TextView
-                    android:id="@+id/comment_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="0"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            <!-- Icon "comment" -->
 
 
         </RelativeLayout>
