@@ -29,6 +29,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.HomePage.HomePage;
 import com.fu.fe.minhtq.prm392g5fa24bl5.MainActivity;
@@ -45,6 +48,8 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -92,11 +97,12 @@ public class CreateRecipe extends AppCompatActivity {
 
     private LinearLayout ingredientsContainer;
     private LinearLayout listLayoutStep;
-    private LinearLayout selectedImagesContainer;
+    private RecyclerView selectedImagesContainer;
 
     private LinearLayout imageContainerForStep;
     private int maxWidth;
 
+    private List<Bitmap> listImgDescBitmap;
 
     private int stepCount = 1;
 
@@ -124,7 +130,7 @@ public class CreateRecipe extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels; // Chiều rộng màn hình
-
+        listImgDescBitmap = new ArrayList<>();
         // Tính toán chiều rộng tối đa của ảnh (1/4 chiều rộng màn hình)
         maxWidth = screenWidth / 4;
 
@@ -214,21 +220,44 @@ public class CreateRecipe extends AppCompatActivity {
 
             // Lưu ảnh vào bộ nhớ trong
             saveImageToFile(bitmap, CreateRecipe.this, fileName);
+
+            recipe = db.recipeDAO().getRecipeById((int) recipeId);
+
             recipe.setMainImage(fileName);
             db.recipeDAO().updateRecipe(recipe);
+            Log.d("UpdateRecipe", "Updated recipe with ID: " + recipe.getMainImage());
+        }
+
+        if (listImgDescBitmap != null && !listImgDescBitmap.isEmpty()) {
+            for (int i = 0; i < listImgDescBitmap.size(); i++) {
+                Bitmap bitmapDesc = listImgDescBitmap.get(i);
+
+                // Tạo tên file
+                String fileNameDesc = "recipe_" + recipeId + "_description_" + i + ".png";
+
+                // Lưu ảnh vào file
+                saveImageToFile(bitmapDesc, CreateRecipe.this, fileNameDesc);
+
+                // Tạo đối tượng Recipe_image
+                Recipe_image recipe_image = new Recipe_image(fileNameDesc, (int) recipeId);
+
+                // Lưu đối tượng vào cơ sở dữ liệu
+                db.recipe_imageDAO().insertRecipe_image(recipe_image);
+            }
         }
 
 
-        if(selectedImagesContainer.getChildCount() > 0){
-            for (int i = 0; i < selectedImagesContainer.getChildCount(); i++) {
-                ImageView imageView = (ImageView) selectedImagesContainer.getChildAt(i);
-                bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                fileName = "recipe_" + recipeId + "_description_" + i + ".png";
-                saveImageToFile(bitmap, CreateRecipe.this, fileName);
-                Recipe_image recipe_image = new Recipe_image(fileName, (int) recipeId);
-                db.recipe_imageDAO().insertRecipe_image(recipe_image);
-            }
-        };
+
+//        if(selectedImagesContainer.getChildCount() > 0){
+//            for (int i = 0; i < selectedImagesContainer.getChildCount(); i++) {
+//                ImageView imageView = (ImageView) selectedImagesContainer.getChildAt(i);
+//                bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+//                fileName = "recipe_" + recipeId + "_description_" + i + ".png";
+//                saveImageToFile(bitmap, CreateRecipe.this, fileName);
+//                Recipe_image recipe_image = new Recipe_image(fileName, (int) recipeId);
+//                db.recipe_imageDAO().insertRecipe_image(recipe_image);
+//            }
+//        };
 
 
         // Lưu danh sách nguyên liệu
@@ -256,40 +285,46 @@ public class CreateRecipe extends AppCompatActivity {
 
             // Lấy Bitmap từ ImageButton
             bitmap = getBitmapFromImageButton(imageButton);
+            String fileNameStep = "";
             if (bitmap != null && !isDefaultImage(imageButton)) {
                 // Tạo tên file cho ảnh
-                String fileNameStep = "recipe_" + recipeId + "_step_" + stepIndex + ".png";
+                fileNameStep = "recipe_" + recipeId + "_step_" + stepIndex + ".png";
 
                 ExecutorService executor = Executors.newSingleThreadExecutor();
-
+                String fileNameStepFinal = fileNameStep;
                 // Truyền Bitmap vào Runnable thay vì lấy nó trong run()
                 Bitmap finalBitmap = bitmap;
                 Runnable saveImageTask = new Runnable() {
                     @Override
                     public void run() {
                         // Lưu ảnh vào bộ nhớ trong
-                        saveImageToFile(finalBitmap, CreateRecipe.this, fileNameStep);
+                        saveImageToFile(finalBitmap, CreateRecipe.this, fileNameStepFinal);
                     }
                 };
 
                 // Thực thi công việc lưu ảnh trong background
                 executor.execute(saveImageTask);
 
-                Step step = new Step();
-                step.setRecipe_id((int) recipeId);
-                step.setDetail(stepInput.getText().toString());
-                step.setNumber(stepIndex);
 
-                // Lưu tên file vào database, thay vì URL từ Firebase nếu bạn lưu ảnh trong bộ nhớ trong
-                step.setImage(fileNameStep);  // Lưu tên file ảnh
-
-                // Gọi phương thức insert vào cơ sở dữ liệu
-                db.stepDAO().insertStep(step);
-            } else {
             }
+            Step step = new Step();
+            step.setRecipe_id((int) recipeId);
+            step.setDetail(stepInput.getText().toString());
+            step.setNumber(stepIndex);
+
+            // Lưu tên file vào database, thay vì URL từ Firebase nếu bạn lưu ảnh trong bộ nhớ trong
+            step.setImage(fileNameStep);  // Lưu tên file ảnh
+
+            // Gọi phương thức insert vào cơ sở dữ liệu
+            db.stepDAO().insertStep(step);
+
         }
 
-        Toast.makeText(this, "Thêm món ăn thành công", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Thêm món ăn thành công", Toast.LENGTH_SHORT).show();
+//        Log.d("UpdateRecipe", "Updated recipe with ID: " + recipe.getMainImage());
+//
+//        Recipe recipe1 = db.recipeDAO().getRecipeById((int) recipeId);
+//        Log.d("UpdateRecipe", "Updated recipe with ID: " + recipe1.getMainImage());
         recreate();
 
 
@@ -435,13 +470,17 @@ public class CreateRecipe extends AppCompatActivity {
             } else if (requestCode == REQUEST_CAMERA_DESCRIPTION && data != null) {
                 // Lấy ảnh từ camera
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
-                addImageToDescriptionList(photo);
+                listImgDescBitmap.add(photo);
+                initRecyclerView();
+//                addImageToDescriptionList(photo);
             } else if (requestCode == REQUEST_GALLERY_DESCRIPTION && data != null) {
                 // Lấy ảnh từ thư viện
                 Uri selectedImage = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-                    addImageToDescriptionList(bitmap);
+                    listImgDescBitmap.add(bitmap);
+                    initRecyclerView();
+//                    addImageToDescriptionList(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -707,6 +746,8 @@ public class CreateRecipe extends AppCompatActivity {
         }).start();
     }
 
+
+
     private Bitmap resizeBitmap(Bitmap bitmap, int maxWidth) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
@@ -802,6 +843,14 @@ public class CreateRecipe extends AppCompatActivity {
                 imageView.getDrawable().getConstantState().equals(
                         getResources().getDrawable(R.drawable.ic_image_add, null).getConstantState()
                 );
+    }
+
+    private void initRecyclerView() {
+        ImgDescBitmapAdapter adapter = new ImgDescBitmapAdapter(listImgDescBitmap);
+        selectedImagesContainer.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        selectedImagesContainer.setLayoutManager(layoutManager);
     }
 
 

@@ -61,6 +61,7 @@ public class DetailRecipe extends AppCompatActivity {
 
     private void bindingView(){
         db = AppDatabase.getInstance(this);
+        recipe = db.recipeDAO().getRecipeById(recipeId);
         mainImage = findViewById(R.id.main_img);
         deleteButton = findViewById(R.id.btn_delete);
         editButton = findViewById(R.id.btn_edit);
@@ -81,7 +82,7 @@ public class DetailRecipe extends AppCompatActivity {
 
         recyclerViewImageGallery = findViewById(R.id.recyclerViewImageGallery);
         imgDescList = db.recipe_imageDAO().getImagePathsByRecipeId(recipeId);
-        recipe = db.recipeDAO().getRecipeById(recipeId);
+
 
     }
 
@@ -224,7 +225,7 @@ public class DetailRecipe extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
-        recipeId = getIntent().getIntExtra("recipeId", 17);
+        recipeId = getIntent().getIntExtra("recipeId", 28);
 
         bindingView();
         bindingAction();

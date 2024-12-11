@@ -20,7 +20,7 @@
             android:exported="true" />
         <activity
             android:name=".manage.recipe.UpdateRecipe"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TestFavoriteActivity"
             android:exported="true" />
