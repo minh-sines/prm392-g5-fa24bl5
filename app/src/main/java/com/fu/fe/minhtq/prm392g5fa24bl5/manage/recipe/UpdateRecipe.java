@@ -261,6 +261,10 @@ public class UpdateRecipe extends AppCompatActivity {
             db.recipeDAO().updateRecipe(updatedRecipe);
             Log.d("UpdateRecipe", "Updated recipe with ID: " + updatedRecipe.getMainImage());
         }
+        List<Recipe_image> oldRecipeImages = db.recipe_imageDAO().getRecipe_imagesByRecipeId((int) recipeId);
+        for (Recipe_image oldRecipeImage : oldRecipeImages) {
+            db.recipe_imageDAO().deleteRecipe_image(oldRecipeImage);
+        }
 
         if (listImgDescBitmap != null && !listImgDescBitmap.isEmpty()) {
             for (int i = 0; i < listImgDescBitmap.size(); i++) {
@@ -340,6 +344,10 @@ public class UpdateRecipe extends AppCompatActivity {
 
 
         List<Step> oldSteps = db.stepDAO().getStepsByRecipeId((int) recipeId);
+        for (Step oldStep : oldSteps) {
+            db.stepDAO().deleteStep(oldStep);
+        }
+
         List<Step> newSteps = new ArrayList<>();
 
         // Lưu danh sách bước
@@ -383,56 +391,13 @@ public class UpdateRecipe extends AppCompatActivity {
 
             // Lưu tên file vào database, thay vì URL từ Firebase nếu bạn lưu ảnh trong bộ nhớ trong
             step.setImage(fileNameStep);  // Lưu tên file ảnh
-            newSteps.add(step);
+//            newSteps.add(step);
 
-            List<Step> deletedSteps = new ArrayList<>(oldSteps);
-            for (Step oldStep : oldSteps) {
-                for (Step newStep : newSteps) {
-                    if (oldStep.getNumber() == newStep.getNumber()) {
-                        deletedSteps.remove(oldStep); // Nếu bước cũ tồn tại trong danh sách mới, không bị xóa
-                        break;
-                    }
-                }
-            }
 
-            // Tìm các bước mới
-            List<Step> addedSteps = new ArrayList<>();
-            for (Step newStep : newSteps) {
-                boolean exists = false;
-                for (Step oldStep : oldSteps) {
-                    if (newStep.getNumber() == oldStep.getNumber()) {
-                        exists = true; // Nếu bước đã tồn tại trong danh sách cũ, không cần thêm
-                        break;
-                    }
-                }
-                if (!exists) {
-                    addedSteps.add(newStep);
-                }
-            }
 
-            // Cập nhật cơ sở dữ liệu
-            // Xóa các bước bị xóa
-            for (Step step1 : deletedSteps) {
-                db.stepDAO().deleteStep(step1);
-            }
 
-            // Thêm các bước mới
-            for (Step step1 : addedSteps) {
-                db.stepDAO().insertStep(step);
-            }
-
-            // (Tùy chọn) Cập nhật bước thay đổi chi tiết hoặc hình ảnh (nếu cần)
-            for (Step newStep : newSteps) {
-                for (Step oldStep : oldSteps) {
-                    if (newStep.getNumber() == oldStep.getNumber() &&
-                            (!newStep.getDetail().equals(oldStep.getDetail()) || !newStep.getImage().equals(oldStep.getImage()))) {
-                        // Nếu chi tiết hoặc ảnh thay đổi, cập nhật cơ sở dữ liệu
-                        db.stepDAO().updateStep(newStep);
-                    }
-                }
-            }
             // Gọi phương thức insert vào cơ sở dữ liệu
-//            db.stepDAO().insertStep(step);
+            db.stepDAO().insertStep(step);
 
         }
 
