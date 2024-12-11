@@ -46,6 +46,4 @@ public interface RecipeDAO {
     @Query("SELECT * FROM Recipe ORDER BY created_at ASC")
     List<Recipe> getRecipeByDate();
 
-    @Query("SELECT * FROM Recipe WHERE recipe_id = :recipeId")
-    Recipe getRecipeById(int recipeId);
 }

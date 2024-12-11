@@ -1,6 +1,9 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.Social;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import com.fu.fe.minhtq.prm392g5fa24bl5.model.Favorite;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Heart;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -52,7 +56,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         tvDatePost.setText(formatDate(r.created_at));
         tvTitle.setText(r.getTitle());
         tvDescription.setText(r.getDescription());
-        ivImage.setImageResource(r.getImage());
+        loadImageToImageView(r.getMainImage(), itemView.getContext(), ivImage);
 
         btnHeart.setText(heartDAO.getHeartsByRecipeId(r.recipe_id).size() + "");
         //fix cứng user
@@ -190,5 +194,32 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         bindingView();
         bindingAction();
+    }
+
+    private void loadImageToImageView(String fileName, Context context, ImageView imageView) {
+        try {
+            // Lấy thư mục private của ứng dụng
+            File directory = context.getFilesDir();
+
+            // Tạo đường dẫn tới file ảnh
+            File file = new File(directory, fileName);
+
+            // Kiểm tra xem file có tồn tại không
+            if (file.exists()) {
+                // Đọc ảnh từ file và chuyển thành Bitmap
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+
+                // Hiển thị ảnh trên ImageView
+                imageView.setImageBitmap(bitmap);
+            } else {
+                // Nếu file không tồn tại, đặt ảnh mặc định
+                imageView.setImageResource(R.drawable.default_recipe); // Đổi R.drawable.default_image thành ảnh mặc định của bạn
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Đặt ảnh mặc định nếu có lỗi
+            imageView.setImageResource(R.drawable.default_recipe);
+        }
     }
 }

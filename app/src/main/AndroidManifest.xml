@@ -51,10 +51,10 @@
             android:exported="true" />
         <activity
             android:name=".Login.LoginActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".manage.recipe.CreateRecipe"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Home_of_5_fragment"
             android:exported="true"
@@ -66,21 +66,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Login.SignupActivity"
-            android:exported="true" />
+
         <activity
             android:name=".Login.ForgotPassword"
             android:exported="true" />
-        <activity
-            android:name=".database.DatabasePrepopulate"
-            android:exported="true" />
-        <activity
-            android:name=".Login.LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name=".manage.recipe.CreateRecipe"
-            android:exported="true"></activity>
+
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true" />
