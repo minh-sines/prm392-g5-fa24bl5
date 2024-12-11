@@ -22,16 +22,16 @@ public interface RecipeDAO {
     @Query("SELECT * FROM Recipe WHERE [delete] = 0")
     List<Recipe> getAllRecipes();
 
-    @Query("SELECT * FROM Recipe WHERE recipe_id = :id")
+    @Query("SELECT * FROM Recipe WHERE recipe_id = :id and  [delete] = 0")
     Recipe getRecipeById(int id);
 
-    @Query("SELECT * FROM Recipe WHERE title LIKE :query")
+    @Query("SELECT * FROM Recipe WHERE title LIKE :query and  [delete] = 0")
     List<Recipe> searchRecipesByTitle(String query);
     
-    @Query("SELECT * FROM Recipe WHERE created_by = :id and  [delete] = false")
+    @Query("SELECT * FROM Recipe WHERE created_by = :id and  [delete] = 0")
     List<Recipe> getAllRecipesByAccountId(int id);
 
-    @Query("SELECT Recipe.* FROM Recipe INNER JOIN Favorite ON Recipe.recipe_id = Favorite.recipe_id WHERE Favorite.user_id = :id and  Recipe.[delete] = false")
+    @Query("SELECT Recipe.* FROM Recipe INNER JOIN Favorite ON Recipe.recipe_id = Favorite.recipe_id WHERE Favorite.user_id = :id and  Recipe.[delete] = 0")
     List<Recipe> getFavoriteRecipesByAccountId(int id);
 
     @Insert
@@ -43,7 +43,7 @@ public interface RecipeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRecipesList(List<Recipe> recipes);
 
-    @Query("SELECT * FROM Recipe ORDER BY created_at ASC")
+    @Query("SELECT * FROM Recipe WHERE [delete] = 0 ORDER BY created_at ASC")
     List<Recipe> getRecipeByDate();
 
 }

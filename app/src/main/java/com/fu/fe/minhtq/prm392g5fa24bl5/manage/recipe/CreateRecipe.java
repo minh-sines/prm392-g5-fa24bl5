@@ -133,6 +133,12 @@ public class CreateRecipe extends AppCompatActivity {
         listImgDescBitmap = new ArrayList<>();
         // Tính toán chiều rộng tối đa của ảnh (1/4 chiều rộng màn hình)
         maxWidth = screenWidth / 4;
+        clearView();
+    }
+
+    private void clearView() {
+        edtDishName.setText("");
+        edtCookingTime.setText("");
 
     }
 
@@ -207,9 +213,9 @@ public class CreateRecipe extends AppCompatActivity {
 
         // Thêm Recipe vào DB
         AppDatabase db = AppDatabase.getInstance(this);
-        db.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
-        db.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
-        db.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
+//        db.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
+//        db.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
+//        db.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
         long recipeId = db.recipeDAO().insertRecipe(recipe);
         String fileName = "";
 
@@ -318,12 +324,12 @@ public class CreateRecipe extends AppCompatActivity {
 
         }
 
-//        Toast.makeText(this, "Thêm món ăn thành công", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Thêm món ăn thành công", Toast.LENGTH_SHORT).show();
 //        Log.d("UpdateRecipe", "Updated recipe with ID: " + recipe.getMainImage());
 //
 //        Recipe recipe1 = db.recipeDAO().getRecipeById((int) recipeId);
 //        Log.d("UpdateRecipe", "Updated recipe with ID: " + recipe1.getMainImage());
-        recreate();
+        finish();
 
 
     }
@@ -360,6 +366,7 @@ public class CreateRecipe extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
+
         bindingView();
         bindingAction();
 
@@ -802,31 +809,37 @@ public class CreateRecipe extends AppCompatActivity {
     }
 
     private void saveImageToFile(Bitmap bitmap, Context context, String fileName) {
-        FileOutputStream fos = null;
-        try {
-            // Tạo file trong thư mục riêng của ứng dụng
-            File directory = context.getFilesDir();  // Thư mục này là private của app
-            File file = new File(directory, fileName);  // Tạo file với tên tùy chọn
+        ExecutorService executor = Executors.newSingleThreadExecutor();  // Tạo một Executor với một thread đơn
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                FileOutputStream fos = null;
+                try {
+                    // Tạo file trong thư mục riêng của ứng dụng
+                    File directory = context.getFilesDir();  // Thư mục này là private của app
+                    File file = new File(directory, fileName);  // Tạo file với tên tùy chọn
 
-            // Mở FileOutputStream để ghi dữ liệu vào file
-            fos = new FileOutputStream(file);
+                    // Mở FileOutputStream để ghi dữ liệu vào file
+                    fos = new FileOutputStream(file);
 
-            // Chuyển Bitmap thành định dạng PNG và lưu vào file
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    // Chuyển Bitmap thành định dạng PNG và lưu vào file
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 
-            // Đảm bảo ghi toàn bộ dữ liệu
-            fos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
+                    // Đảm bảo ghi toàn bộ dữ liệu
+                    fos.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (fos != null) {
+                            fos.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }
+        });
     }
 
     private boolean isDefaultImage(ImageButton imageButton) {
