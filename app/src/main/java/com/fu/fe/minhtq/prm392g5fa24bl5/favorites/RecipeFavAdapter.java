@@ -1,6 +1,7 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.favorites;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
 import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
+import com.fu.fe.minhtq.prm392g5fa24bl5.manage.recipe.DetailRecipe;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Favorite;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 
@@ -44,7 +46,7 @@ public class RecipeFavAdapter extends RecyclerView.Adapter<RecipeFavAdapter.Reci
         Recipe recipe = recipeList.get(position);
         holder.titleView.setText(recipeList.get(position).getTitle());
         holder.descriptionView.setText(recipeList.get(position).getDescription());
-        holder.timeView.setText(recipeList.get(position).getTime());
+        holder.timeView.setText("Prepare time: " + recipeList.get(position).getTime());
 //        holder.imageView.setImageResource(recipeList.get(position).getImage());
         holder.recipe_id.setText(String.valueOf(recipeList.get(position).getRecipe_id()));
         holder.loadImageToImageView(recipeList.get(position).getMainImage(), context, holder.imageView);
@@ -107,6 +109,9 @@ public class RecipeFavAdapter extends RecyclerView.Adapter<RecipeFavAdapter.Reci
 
         private void onClickItem(View view) {
             Toast.makeText(itemView.getContext(), "Item clicked on "+titleView.getText(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(itemView.getContext(), DetailRecipe.class);
+            intent.putExtra("recipeId", Integer.parseInt(recipe_id.getText().toString()));
+            itemView.getContext().startActivity(intent);
         }
 
         private void loadImageToImageView(String fileName, Context context, ImageView imageView) {

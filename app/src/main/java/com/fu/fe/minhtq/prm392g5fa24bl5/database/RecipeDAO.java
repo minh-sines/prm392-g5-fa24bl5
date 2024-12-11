@@ -43,7 +43,10 @@ public interface RecipeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRecipesList(List<Recipe> recipes);
 
-    @Query("SELECT * FROM Recipe ORDER BY created_at ASC")
+    @Query("SELECT * FROM Recipe where [is_published] = 1 ORDER BY created_at DESC ")
     List<Recipe> getRecipeByDate();
+
+    @Query("UPDATE Recipe SET [is_published] = 1, created_at = :timestamp WHERE recipe_id = :id")
+    void setPublishRecipe(int id, long timestamp);
 
 }
