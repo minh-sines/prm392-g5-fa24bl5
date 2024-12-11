@@ -62,6 +62,11 @@ public class DetailRecipe extends AppCompatActivity {
     private void bindingView(){
         db = AppDatabase.getInstance(this);
         recipe = db.recipeDAO().getRecipeById(recipeId);
+        if(recipe == null){
+            Toast.makeText(this, "Recipe not found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         mainImage = findViewById(R.id.main_img);
 
         recipeTitle = findViewById(R.id.recipe_title);

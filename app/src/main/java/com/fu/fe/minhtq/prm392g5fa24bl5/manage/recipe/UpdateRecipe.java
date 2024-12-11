@@ -123,6 +123,11 @@ public class UpdateRecipe extends AppCompatActivity {
         db = AppDatabase.getInstance(this);
         updatedRecipe = db.recipeDAO().getRecipeById(recipeId);
 
+        if (updatedRecipe == null) {
+            Toast.makeText(this, "Recipe not found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         edtCookingTime = findViewById(R.id.edtCookingTime);
         edtDescription = findViewById(R.id.edtDescription);
         edtDishName = findViewById(R.id.edtDishName);
