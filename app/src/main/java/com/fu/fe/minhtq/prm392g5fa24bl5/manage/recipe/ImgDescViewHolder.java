@@ -32,7 +32,7 @@ public class ImgDescViewHolder extends RecyclerView.ViewHolder {
     public void setData(String imgDescStr){
         loadImageToImageView(imgDescStr, itemView.getContext(), imgDesc);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,  // Đặt chiều rộng là MATCH_PARENT
+                200,  // Đặt chiều rộng là MATCH_PARENT
                 200       // Đặt chiều cao là 200dp (chuyển đổi dp sang px)
         );
         imgDesc.setLayoutParams(layoutParams);

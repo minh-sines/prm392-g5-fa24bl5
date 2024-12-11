@@ -1,161 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:padding="16dp"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
 
-    <!-- 顶部工具栏 -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_centerVertical="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_back" />
 
-    </RelativeLayout>
+        <!-- Icon thêm ảnh -->
+        <ImageView
+            android:id="@+id/imgAddDish"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_image_add"
+            android:tag="default_image"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="16dp" />
 
-    <!-- 主要内容区域 -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <!-- Tên món ăn -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tên món ăn"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="4dp" />
 
+        <EditText
+            android:id="@+id/edtDishName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập tên món ăn"
+            android:background="@android:drawable/edit_text"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Mô tả -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mô tả"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/edtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập mô tả"
+            android:background="@android:drawable/edit_text"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Thời gian nấu -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thời gian nấu"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/edtCookingTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập thời gian nấu (phút)"
+            android:background="@android:drawable/edit_text"
+            android:inputType="number"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Nguyên liệu -->
         <LinearLayout
+            android:id="@+id/ingredientsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="12dp">
+
+            <!-- Dòng nguyên liệu đầu tiên -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Nhập nguyên liệu"
+                    android:background="@android:drawable/edit_text"
+                    android:padding="8dp" />
+
+                <ImageButton
+                    android:id="@+id/btnAddIngredient"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_add"
+                    android:background="@null"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="Add ingredient" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Các bước thực hiện -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Các bước thực hiện"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Bước 1 -->
+        <LinearLayout
+            android:id="@+id/listLayoutStep"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- 食物图片 -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp">
-
-                <ImageView
-                    android:id="@+id/ivFood"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"/>
-
-                <ImageButton
-                    android:id="@+id/btnEdit"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="end|bottom"
-                    android:layout_margin="16dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_delete" />
-            </FrameLayout>
-
-            <!-- 菜品标题 -->
-            <TextView
-                android:id="@+id/tvDishName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:text="Gà hấp lá chanh" />
-
-            <!-- 描述文本 -->
-            <TextView
-                android:id="@+id/tvDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:textSize="14sp"
-                tools:text="Bữa cơm gia đình của người Việt Nam..." />
-
-            <!-- 烹饪时间 -->
             <LinearLayout
+                android:id="@+id/stepsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Thời gian nấu"
-                    android:textStyle="bold" />
+                    android:layout_weight="0.5"
+                    android:text="Bước 1"
+                    android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/tvCookingTime"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/edtStep1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="60 phút" />
+                    android:layout_weight="3"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="Nhập bước 1"
+                    android:padding="8dp" />
+
+                <ImageButton
+                    android:id="@+id/btnAddImageStep"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="4dp"
+                    android:background="@null"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/add_image" />
+
+                <!--                <ImageButton-->
+                <!--                    android:id="@+id/btnDeleteStep1"-->
+                <!--                    android:layout_width="40dp"-->
+                <!--                    android:layout_height="40dp"-->
+                <!--                    android:layout_marginStart="4dp"-->
+                <!--                    android:background="@null"-->
+                <!--                    android:scaleType="centerInside"-->
+                <!--                    android:src="@drawable/ic_delete" />-->
             </LinearLayout>
-
-            <!-- 原料标题 -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Nguyên liệu"
-                android:textColor="#00FF00"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <!-- 原料列表 -->
-            <TextView
-                android:id="@+id/tvIngredients"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                tools:text="Thịt gà tươi, lá chanh, muối tiêu" />
-
-            <!-- 步骤标题 -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Các bước thực hiện"
-                android:textColor="#00FF00"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <!-- 步骤列表 -->
-            <LinearLayout
-                android:id="@+id/llStepsList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:orientation="vertical">
-
-                <!-- 步骤项将在代码中动态添加 -->
-            </LinearLayout>
-
-            <!-- 添加步骤按钮 -->
-            <Button
-                android:id="@+id/btnAddStep"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Thêm bước" />
-
-            <!-- 添加图片描述按钮 -->
-            <Button
-                android:id="@+id/btnAddImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:text="Thêm ảnh mô tả" />
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        <!-- Nút thêm bước -->
+        <Button
+            android:id="@+id/btnAddStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm bước"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@android:color/holo_green_dark"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Thêm ảnh mô tả -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thêm ảnh mô tả"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="8dp" />
+
+        <ImageView
+            android:id="@+id/imgAddDescriptionImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_image_add"
+            android:scaleType="centerInside" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/selectedImagesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            />
+        <Button
+            android:id="@+id/btnCreateDish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Thêm Món Ăn"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@android:color/holo_blue_dark"
+            android:padding="12dp" />
+    </LinearLayout>
+</ScrollView>
