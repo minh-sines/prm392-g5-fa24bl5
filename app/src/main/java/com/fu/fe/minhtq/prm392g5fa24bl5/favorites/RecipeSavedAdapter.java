@@ -42,7 +42,7 @@ public class RecipeSavedAdapter extends RecyclerView.Adapter<RecipeSavedAdapter.
         holder.ingredientView.setText(recipeList.get(position).getDescription());
         holder.stepView.setText(recipeList.get(position).getTime());
         //        holder.imageView.setImageResource(recipeList.get(position).getImage());
-        holder.loadImageToImageView(recipeList.get(position).getImage(), context, holder.imageView);
+        holder.loadImageToImageView(recipeList.get(position).getMainImage(), context, holder.imageView);
         holder.recipe_id.setText(String.valueOf(recipeList.get(position).getRecipe_id()));
     }
 
