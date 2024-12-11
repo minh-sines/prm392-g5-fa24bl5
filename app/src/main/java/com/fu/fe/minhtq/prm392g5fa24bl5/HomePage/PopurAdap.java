@@ -1,9 +1,9 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.HomePage;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,21 +13,21 @@ import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 
 import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder>{
+public class PopurAdap extends RecyclerView.Adapter<PopurViewHolder>{
 
     private List<Recipe> data;
-    public ItemAdapter(List<Recipe> data){
+    public PopurAdap(List<Recipe> data){
         this.data = data;}
     @NonNull
     @Override
-    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PopurViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.fooditem, parent, false);
-        return new ItemViewHolder(v);
+        View v = inflater.inflate(R.layout.recipeimage, parent, false);
+        return new PopurViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PopurViewHolder holder, int position) {
         Recipe item = data.get(position);
         holder.setData(item);
     }
@@ -37,3 +37,4 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder>{
         return data.size();
     }
 }
+

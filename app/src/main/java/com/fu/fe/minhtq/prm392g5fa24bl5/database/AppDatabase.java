@@ -20,7 +20,7 @@ import com.fu.fe.minhtq.prm392g5fa24bl5.model.*;
         Recipe_image.class,
         Recipe_tag.class,
         Tag.class,
-        Favorite.class}, version = 2)
+        Favorite.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "app_database";
     private static AppDatabase instance;

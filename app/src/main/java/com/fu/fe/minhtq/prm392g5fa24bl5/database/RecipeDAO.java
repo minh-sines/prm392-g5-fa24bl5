@@ -18,11 +18,15 @@ public interface RecipeDAO {
     @Update
     void updateRecipe(Recipe recipe);
 
-    @Query("SELECT * FROM Recipe WHERE [delete] = false")
+    @Query("SELECT * FROM Recipe WHERE [delete] = 0")
     List<Recipe> getAllRecipes();
+
     @Query("SELECT * FROM Recipe WHERE recipe_id = :id")
     Recipe getRecipeById(int id);
 
     @Query("SELECT * FROM Recipe WHERE created_by = :id")
     List<Recipe> getAllRecipesByAccountId(int id);
+    @Query("SELECT * FROM Recipe WHERE title LIKE :query")
+    List<Recipe> searchRecipesByTitle(String query);
+
 }
