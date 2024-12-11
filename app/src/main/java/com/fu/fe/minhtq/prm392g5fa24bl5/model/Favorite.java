@@ -8,18 +8,18 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "favorite",
         foreignKeys = {
                 @ForeignKey(
-                entity = Account.class,
-                parentColumns = "account_id",
-                childColumns = "user_id",
-                onDelete = ForeignKey.CASCADE, // Action on delete
-                onUpdate = ForeignKey.CASCADE // Action on update
+                        entity = Account.class,
+                        parentColumns = "account_id",
+                        childColumns = "user_id",
+                        onDelete = ForeignKey.CASCADE, // Action on delete
+                        onUpdate = ForeignKey.CASCADE // Action on update
                 ),
                 @ForeignKey(
-                entity = Recipe.class,
-                parentColumns = "recipe_id",
-                childColumns = "recipe_id",
-                onDelete = ForeignKey.CASCADE, // Action on delete
-                onUpdate = ForeignKey.CASCADE // Action on update
+                        entity = Recipe.class,
+                        parentColumns = "recipe_id",
+                        childColumns = "recipe_id",
+                        onDelete = ForeignKey.CASCADE, // Action on delete
+                        onUpdate = ForeignKey.CASCADE // Action on update
                 )
         },
         indices = {

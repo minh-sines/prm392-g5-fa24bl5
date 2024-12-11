@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.*;
@@ -22,17 +21,11 @@ import com.fu.fe.minhtq.prm392g5fa24bl5.model.*;
         Tag.class,
         Favorite.class,
         Heart.class,
-        Comment.class}, version = 3)
+        Comment.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "app_database";
     private static AppDatabase instance;
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
-        @Override
-        public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE recipe ADD COLUMN main_image TEXT");
-        }
-    };
     public static synchronized AppDatabase getInstance(Context context)
     {
         if(instance == null)
@@ -40,12 +33,10 @@ public abstract class AppDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME)
                     .allowMainThreadQueries()
 //                    .addCallback(roomCallBack)
-                    .fallbackToDestructiveMigration()
                     .build();
         }
         return instance;
     }
-
 
     private static RoomDatabase.Callback roomCallBack = new RoomDatabase.Callback(){
         @Override
@@ -64,16 +55,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
         }
     };
-
-
     public abstract AccountDAO accountDAO();
     public abstract RecipeDAO recipeDAO();
     public abstract IngredientDAO ingredientDAO();
     public abstract FavoriteDAO favoriteDAO();
-    public abstract StepDAO stepDAO();
     public abstract HeartDAO heartDAO();
     public abstract CommentDAO commentDAO();
 
-
-    public abstract Recipe_imageDAO recipe_imageDAO();
 }
