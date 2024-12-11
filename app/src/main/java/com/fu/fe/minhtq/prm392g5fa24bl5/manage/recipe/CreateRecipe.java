@@ -207,9 +207,9 @@ public class CreateRecipe extends AppCompatActivity {
 
         // Thêm Recipe vào DB
         AppDatabase db = AppDatabase.getInstance(this);
-//        db.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
-//        db.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
-//        db.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
+        db.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123",0));
+        db.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123", 0));
+        db.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123", 0));
         long recipeId = db.recipeDAO().insertRecipe(recipe);
         String fileName = "";
 

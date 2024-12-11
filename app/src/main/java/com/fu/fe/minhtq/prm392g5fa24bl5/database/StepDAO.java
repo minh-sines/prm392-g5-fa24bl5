@@ -1,8 +1,10 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Step;
 
@@ -19,5 +21,10 @@ public interface StepDAO {
     @Query("SELECT * FROM Step WHERE step_id = :stepId")
     Step getStepById(int stepId);
 
+    @Delete
+    void deleteStep(Step step);
+
+    @Update
+    void updateStep(Step step);
 
 }
