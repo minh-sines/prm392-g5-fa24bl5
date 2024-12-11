@@ -162,7 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:text="Xin chào Nguyễn Văn A"
+            android:text="Xin chào"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="30dp" />

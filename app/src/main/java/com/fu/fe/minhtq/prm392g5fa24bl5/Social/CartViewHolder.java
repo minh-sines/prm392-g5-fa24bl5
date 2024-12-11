@@ -61,7 +61,8 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         Account account = accountDAO.getAccountById(r.getCreated_by());
         ivUserAvatar.setImageResource(R.drawable.img);
 //        ivUserAvatar.setImageResource(account.getAvatar());
-        tvUsername.setText("Nguyễn Văn A"); // fix cứng
+//        tvUsername.setText("Nguyễn Văn A"); // fix cứng
+        tvUsername.setText(account.getName()); // fix cứng
         tvDatePost.setText(formatDate(r.created_at));
         tvTitle.setText(r.getTitle());
         tvDescription.setText(r.getDescription());
@@ -69,7 +70,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
 
         btnHeart.setText(heartDAO.getHeartsByRecipeId(r.recipe_id).size() + "");
         //fix cứng user
-        if (heartDAO.isHeart(2, r.recipe_id)) {
+        if (heartDAO.isHeart(1, r.recipe_id)) {
             btnHeart.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_fill, 0, 0, 0);
         } else {
             btnHeart.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_round, 0, 0, 0);
@@ -78,7 +79,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         btnComment.setText(commentDAO.getCommentsByRecipeIdOrderByDate(r.recipe_id).size() + "");
 
         btnSave.setText(favoriteDAO.getFavoritesByRecipeId(r.recipe_id).size() + "");
-        if (favoriteDAO.isFavorite(2, r.recipe_id)) {
+        if (favoriteDAO.isFavorite(1, r.recipe_id)) {
             btnSave.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_save_fill, 0, 0, 0);
         } else {
             btnSave.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_save_round, 0, 0, 0);
@@ -142,12 +143,12 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void onBtnHeartClick(View view) {
-        if (heartDAO.isHeart(2, recipe.recipe_id)) {
-            heartDAO.deleteHeart(2, recipe.recipe_id);
+        if (heartDAO.isHeart(1, recipe.recipe_id)) {
+            heartDAO.deleteHeart(1, recipe.recipe_id);
             btnHeart.setText(heartDAO.getHeartsByRecipeId(recipe.recipe_id).size() + "");
             btnHeart.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_round, 0, 0, 0);
         } else {
-            heartDAO.insertHeart(new Heart(recipe.recipe_id, 2, System.currentTimeMillis()));
+            heartDAO.insertHeart(new Heart(recipe.recipe_id, 1, System.currentTimeMillis()));
             int heart = heartDAO.getHeartsByRecipeId(recipe.recipe_id).size();
             btnHeart.setText(heart + "");
             btnHeart.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_fill, 0, 0, 0);
@@ -161,13 +162,13 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void onBtnSaveClick(View view) {
-        if (favoriteDAO.isFavorite(2, recipe.recipe_id)) {
-            favoriteDAO.deleteFavorite(2, recipe.recipe_id);
+        if (favoriteDAO.isFavorite(1, recipe.recipe_id)) {
+            favoriteDAO.deleteFavorite(1, recipe.recipe_id);
             btnSave.setText(favoriteDAO.getFavoritesByRecipeId(recipe.recipe_id).size() + "");
             btnSave.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_save_round, 0, 0, 0);
 
         } else {
-            favoriteDAO.insertFavorite(new Favorite(2, recipe.recipe_id, System.currentTimeMillis()));
+            favoriteDAO.insertFavorite(new Favorite(1, recipe.recipe_id, System.currentTimeMillis()));
             btnSave.setText(favoriteDAO.getFavoritesByRecipeId(recipe.recipe_id).size() + "");
             btnSave.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_save_fill, 0, 0, 0);
         }

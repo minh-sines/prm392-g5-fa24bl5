@@ -41,7 +41,8 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         CommentDAO commentDAO = AppDatabase.getInstance(itemView.getContext()).commentDAO();
 //        ivCommentUserImage.setImageResource(account.getAvatar());
         ivCommentUserImage.setImageResource(R.drawable.img);
-        tvCommentUsername.setText(account.getName());
+        tvCommentUsername.setText("Nguyễn Văn B");
+//        tvCommentUsername.setText(account.getName());
         tvComment.setText(c.getComment());
 
         SharedPreferences pref = itemView.getContext().getSharedPreferences("DataPref", Context.MODE_PRIVATE);
