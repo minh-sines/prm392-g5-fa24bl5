@@ -1,5 +1,9 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.Social;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +22,7 @@ import com.fu.fe.minhtq.prm392g5fa24bl5.database.CommentDAO;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Account;
 import com.fu.fe.minhtq.prm392g5fa24bl5.model.Comment;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -34,9 +39,17 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     public void setComment(Comment c) {
         Account account = accountDAO.getAccountById(c.getUser_id());
         CommentDAO commentDAO = AppDatabase.getInstance(itemView.getContext()).commentDAO();
-//        ivCommentUserImage.setImageResource();
+//        ivCommentUserImage.setImageResource(account.getAvatar());
+        ivCommentUserImage.setImageResource(R.drawable.img);
         tvCommentUsername.setText(account.getName());
         tvComment.setText(c.getComment());
+
+        SharedPreferences pref = itemView.getContext().getSharedPreferences("DataPref", Context.MODE_PRIVATE);
+        if (pref.getInt("user_id", 0) == c.getUser_id()) {
+            btnCommentMenu.setVisibility(View.VISIBLE);
+        } else {
+            btnCommentMenu.setVisibility(View.GONE);
+        }
 
         comment = c;
     }
@@ -45,7 +58,10 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         ivCommentUserImage = itemView.findViewById(R.id.ivCommentUserImage);
         tvCommentUsername = itemView.findViewById(R.id.tvCommentUsername);
         tvComment = itemView.findViewById(R.id.tvComment);
+
+        //kiểm tra user_id == user hiện tại?
         btnCommentMenu = itemView.findViewById(R.id.btnCommentMenu);
+        //nếu không thì visible = gone
 
         accountDAO = AppDatabase.getInstance(itemView.getContext()).accountDAO();
         commentDAO = AppDatabase.getInstance(itemView.getContext()).commentDAO();
@@ -99,5 +115,32 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         bindingView();
         bindingAction();
+    }
+
+    private void loadImageToImageView(String fileName, Context context, ImageView imageView) {
+        try {
+            // Lấy thư mục private của ứng dụng
+            File directory = context.getFilesDir();
+
+            // Tạo đường dẫn tới file ảnh
+            File file = new File(directory, fileName);
+
+            // Kiểm tra xem file có tồn tại không
+            if (file.exists()) {
+                // Đọc ảnh từ file và chuyển thành Bitmap
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+
+                // Hiển thị ảnh trên ImageView
+                imageView.setImageBitmap(bitmap);
+            } else {
+                // Nếu file không tồn tại, đặt ảnh mặc định
+                imageView.setImageResource(R.drawable.default_recipe); // Đổi R.drawable.default_image thành ảnh mặc định của bạn
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Đặt ảnh mặc định nếu có lỗi
+            imageView.setImageResource(R.drawable.default_recipe);
+        }
     }
 }

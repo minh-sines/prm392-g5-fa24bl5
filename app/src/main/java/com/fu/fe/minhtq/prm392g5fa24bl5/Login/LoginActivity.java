@@ -70,10 +70,11 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 if (saveAccount) {
                     editor.putBoolean("isLogin", true);
-                    editor.putString("email", email);
+                    editor.putInt("user_id", account.getAccount_id());
                     editor.apply();
                 }
                 Intent i = new Intent(this, HomePage.class);
+                i.putExtra("user_id", account.getAccount_id());
                 startActivity(i);
                 finish();
                 Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
