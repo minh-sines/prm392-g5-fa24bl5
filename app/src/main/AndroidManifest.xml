@@ -28,6 +28,10 @@
             android:name=".manage.recipe.UpdateRecipe"
             android:exported="true" />
         <activity
+            android:name=".HomePage.RecipeListHomeActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".TestFavoriteActivity"
             android:exported="true" />
         <activity

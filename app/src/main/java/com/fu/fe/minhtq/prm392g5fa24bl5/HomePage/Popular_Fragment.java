@@ -1,4 +1,4 @@
-package com.fu.fe.minhtq.prm392g5fa24bl5.favorites;
+package com.fu.fe.minhtq.prm392g5fa24bl5.HomePage;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,22 +17,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
-import com.fu.fe.minhtq.prm392g5fa24bl5.database.AppDatabase;
-import com.fu.fe.minhtq.prm392g5fa24bl5.model.*;
+import com.fu.fe.minhtq.prm392g5fa24bl5.favorites.RecipeFavAdapter;
+import com.fu.fe.minhtq.prm392g5fa24bl5.model.Recipe;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class Favorite_Fragment extends Fragment {
-
-    private RecyclerView fav_rcv;
+public class Popular_Fragment extends Fragment {
+    private RecyclerView popular_rcv;
 
     private List<Recipe> recipeList;
 
     private void bindingView()
     {
-        fav_rcv = getView().findViewById(R.id.fav_rcv);
+        popular_rcv = getView().findViewById(R.id.popular_rcv);
     }
 
     private void bindingAction()
@@ -42,23 +42,18 @@ public class Favorite_Fragment extends Fragment {
 
     private void fillData()
     {
-        AppDatabase instance = AppDatabase.getInstance(getContext());
-        recipeList = instance.recipeDAO().getFavoriteRecipesByAccountId(2);
-
-//        recipeList = new ArrayList<>();
-//        for(int i = 0; i < 10; i++)
-//        {
-//            recipeList.add(new Recipe("Title " + i, "Description " + i, "Time " + i, 2, 1, 1, R.drawable.cutecat));
-//        }
+        recipeList = new ArrayList<>();
+        for(int i = 0; i < 10; i++)
+        {
+            recipeList.add(new Recipe("Title " + i, "Description " + i, "Time " + i, 1, 1, 1, "recipe_1.png"));
+        }
     }
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
         }
     }
 
@@ -66,7 +61,8 @@ public class Favorite_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite_, container, false);
+        return inflater.inflate(R.layout.fragment_popular_, container, false);
+
     }
 
     @Override
@@ -76,9 +72,9 @@ public class Favorite_Fragment extends Fragment {
         bindingView();
         bindingAction();
         Context context = getContext();
-        RecipeFavAdapter adapter = new RecipeFavAdapter(context, recipeList);
-        fav_rcv.setAdapter(adapter);
-        fav_rcv.setLayoutManager(new LinearLayoutManager(context));
+        RecipeListAdapter adapter = new RecipeListAdapter(context, recipeList);
+        popular_rcv.setAdapter(adapter);
+        popular_rcv.setLayoutManager(new LinearLayoutManager(context));
     }
 
     private void loadImageToImageView(String fileName, Context context, ImageView imageView) {

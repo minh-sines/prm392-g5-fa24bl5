@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".favorites.FavoritesFragment"
+    android:id="@+id/main"
+    tools:context=".HomePage.RecipeListHomeActivity"
     android:orientation="vertical">
 
 
@@ -15,6 +16,7 @@
         app:tabIndicatorColor="@color/green_101"
         app:tabIndicatorFullWidth="true"
         app:tabTextColor="@color/black"
+        android:textAlignment="center"
         app:tabTextAppearance="@style/CustomTabTextAppearance"
         />
 

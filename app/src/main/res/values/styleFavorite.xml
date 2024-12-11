@@ -4,4 +4,11 @@
     <style name="NoRippleEffect" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="itemRippleColor">@android:color/transparent</item>
     </style>
+
+    <style name="CustomTabTextAppearance" parent="TextAppearance.MaterialComponents.Body1">
+<!--        <item name="android:fontFamily"></item> &lt;!&ndash; Custom font &ndash;&gt;-->
+        <item name="android:textSize">40sp</item> <!-- Custom text size -->
+        <item name="android:textStyle">bold</item> <!-- Bold text -->
+        <item name="android:textColor">@color/black</item> <!-- Default tab text color -->
+    </style>
 </resources>
