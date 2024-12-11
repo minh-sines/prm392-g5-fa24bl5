@@ -167,13 +167,15 @@
             tools:layout_editor_absoluteX="85dp"
             tools:layout_editor_absoluteY="30dp" />
 
-        <ImageView
-            android:id="@+id/imgNoti"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="28.5dp"
-            app:srcCompat="@drawable/notify"
+        <ImageButton
+            android:id="@+id/imgLogout"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="22dp"
+            android:background="@color/white"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/logout"
             tools:layout_editor_absoluteX="331dp"
             tools:layout_editor_absoluteY="30dp" />
 

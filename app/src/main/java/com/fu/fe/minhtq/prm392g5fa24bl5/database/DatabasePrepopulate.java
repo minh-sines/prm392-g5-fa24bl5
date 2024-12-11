@@ -73,16 +73,16 @@ public class DatabasePrepopulate extends AppCompatActivity {
         int size = 0;
 
 
-//        instance.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123456",System.currentTimeMillis()));
+        instance.accountDAO().insertAccount(new Account("Logan", "logan@gmail.com", "123456",System.currentTimeMillis()));
 //        instance.accountDAO().insertAccount(new Account("Jim", "jim@gmail.com", "123456", System.currentTimeMillis()));
 //        instance.accountDAO().insertAccount(new Account("Will", "will@gmail.com", "123456", System.currentTimeMillis()));
 //        instance.accountDAO().insertAccount(new Account("Smith", "smith@gmail.com", "123456", System.currentTimeMillis()));
 //        instance.accountDAO().insertAccount(new Account("Anya", "anya@gmail.com", "123456", System.currentTimeMillis()));
         accounts.add(new Account("Logan", "logan@gmail.com", "123456",System.currentTimeMillis()));
-        accounts.add(new Account("Jim", "jim@gmail.com", "123456", System.currentTimeMillis()));
-        accounts.add(new Account("Will", "will@gmail.com", "123456", System.currentTimeMillis()));
-        accounts.add(new Account("Smith", "smith@gmail.com", "123456", System.currentTimeMillis()));
-        accounts.add(new Account("Anya", "anya@gmail.com", "123456", System.currentTimeMillis()));
+//        accounts.add(new Account("Jim", "jim@gmail.com", "123456", System.currentTimeMillis()));
+//        accounts.add(new Account("Will", "will@gmail.com", "123456", System.currentTimeMillis()));
+//        accounts.add(new Account("Smith", "smith@gmail.com", "123456", System.currentTimeMillis()));
+//        accounts.add(new Account("Anya", "anya@gmail.com", "123456", System.currentTimeMillis()));
 
         instance.accountDAO().insertAccountsList(accounts);
 //        List<Account> finalAccounts = accounts;
@@ -94,7 +94,7 @@ public class DatabasePrepopulate extends AppCompatActivity {
 //                getListSize();
 //            });
 //        });
-
+//
 //        instance.recipeDAO().insertRecipe(new Recipe("Bo Beefsteak ", "Sweet and creamy coffee drink.", "60 min", 1, System.currentTimeMillis(), System.currentTimeMillis(), R.drawable.cutecat));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe1_2", "Mon an tu tao 12", "70 min", 1, 0, 0, R.drawable.cutedog));
 //        instance.recipeDAO().insertRecipe(new Recipe("recipe1_3","Mon an tu tao 13", "50 min",1, 0,0, R.drawable.cutepenguin));
@@ -111,9 +111,9 @@ public class DatabasePrepopulate extends AppCompatActivity {
 
         recipes.add(new Recipe("Caramelized Pork Belly", "Savory and sweet pork dish perfect with steamed rice.", "90 min", 2, System.currentTimeMillis(), System.currentTimeMillis(), "recipe_1.png"));
         recipes.add(new Recipe("Chicken Pho", "A lighter take on the classic noodle soup with chicken.", "70 min", 2, System.currentTimeMillis(), System.currentTimeMillis(), "recipe_1.png"));
-        recipes.add(new Recipe("Vietnamese Pancakes", "Crispy savory crepes filled with shrimp and pork.", "45 min", 2, System.currentTimeMillis(), System.currentTimeMillis(), "recipe_1.png"));
-        recipes.add(new Recipe("Lotus Stem Salad", "A refreshing salad with lotus stems, shrimp, and pork.", "35 min", 3, System.currentTimeMillis(), System.currentTimeMillis(), "recipe_1.png"));
-        recipes.add(new Recipe("Mango Sticky Rice", "A tropical dessert with fresh mango and coconut rice.", "40 min", 3, System.currentTimeMillis(), System.currentTimeMillis(), "recipe_1.png"));
+//        recipes.add(new Recipe("Vietnamese Pancakes", "Crispy savory crepes filled with shrimp and pork.", "45 min", 2, System.currentTimeMillis(), System.currentTimeMillis(), "recipe_1.png"));
+//        recipes.add(new Recipe("Lotus Stem Salad", "A refreshing salad with lotus stems, shrimp, and pork.", "35 min", 3, System.currentTimeMillis(), System.currentTimeMillis(), "recipe_1.png"));
+//        recipes.add(new Recipe("Mango Sticky Rice", "A tropical dessert with fresh mango and coconut rice.", "40 min", 3, System.currentTimeMillis(), System.currentTimeMillis(), "recipe_1.png"));
 
         instance.recipeDAO().insertRecipesList(recipes);
 //        List<Recipe> finalRecipes = recipes;
@@ -129,9 +129,9 @@ public class DatabasePrepopulate extends AppCompatActivity {
 
         favorites.add(new Favorite(2,1, System.currentTimeMillis()));
         favorites.add(new Favorite(2,2, System.currentTimeMillis()));
-        favorites.add(new Favorite(2,3, System.currentTimeMillis()));
-        favorites.add(new Favorite(3,4, System.currentTimeMillis()));
-        favorites.add(new Favorite(4,5, System.currentTimeMillis()));
+//        favorites.add(new Favorite(2,3, System.currentTimeMillis()));
+//        favorites.add(new Favorite(3,4, System.currentTimeMillis()));
+//        favorites.add(new Favorite(4,5, System.currentTimeMillis()));
 
         instance.favoriteDAO().insertFavoritesList(favorites);
 
@@ -148,8 +148,8 @@ public class DatabasePrepopulate extends AppCompatActivity {
         hearts.add(new Heart(1,2, System.currentTimeMillis()));
         hearts.add(new Heart(1,3, System.currentTimeMillis()));
         hearts.add(new Heart(1,4, System.currentTimeMillis()));
-        hearts.add(new Heart(1,5, System.currentTimeMillis()));
-        hearts.add(new Heart(2,2, System.currentTimeMillis()));
+//        hearts.add(new Heart(1,5, System.currentTimeMillis()));
+//        hearts.add(new Heart(2,2, System.currentTimeMillis()));
 
         instance.heartDAO().insertHeartsList(hearts);
 
