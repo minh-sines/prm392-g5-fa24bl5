@@ -123,6 +123,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder {
         accountDAO = AppDatabase.getInstance(itemView.getContext()).accountDAO();
         heartDAO = AppDatabase.getInstance(itemView.getContext()).heartDAO();
         commentDAO = AppDatabase.getInstance(itemView.getContext()).commentDAO();
+        favoriteDAO = AppDatabase.getInstance(itemView.getContext()).favoriteDAO();
     }
 
     private void bindingAction() {

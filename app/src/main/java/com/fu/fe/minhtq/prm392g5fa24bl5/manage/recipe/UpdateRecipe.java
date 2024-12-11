@@ -467,7 +467,7 @@ public class UpdateRecipe extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
-        recipeId = getIntent().getIntExtra("recipeId", 12);
+        recipeId = getIntent().getIntExtra("recipeId", 2);
         bindingView();
         bindingAction();
         initData();
