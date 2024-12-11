@@ -20,7 +20,9 @@ import com.fu.fe.minhtq.prm392g5fa24bl5.model.*;
         Recipe_image.class,
         Recipe_tag.class,
         Tag.class,
-        Favorite.class}, version = 2)
+        Favorite.class,
+        Heart.class,
+        Comment.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "app_database";
     private static AppDatabase instance;
@@ -69,6 +71,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract IngredientDAO ingredientDAO();
     public abstract FavoriteDAO favoriteDAO();
     public abstract StepDAO stepDAO();
+    public abstract HeartDAO heartDAO();
+    public abstract CommentDAO commentDAO();
 
 
     public abstract Recipe_imageDAO recipe_imageDAO();

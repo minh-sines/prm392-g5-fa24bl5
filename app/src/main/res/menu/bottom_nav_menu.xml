@@ -8,27 +8,27 @@
 
     <item
         android:id="@+id/bottom_people"
-        android:title="People"
         android:icon="@drawable/bottom_nav_people"
-        android:orderInCategory="0" />
+        android:orderInCategory="0"
+        android:title="Social" />
 
     <item
         android:id="@+id/bottom_barchart"
-        android:title="Barchart"
         android:icon="@drawable/bottom_nav_barchart"
-        android:orderInCategory="0" />
+        android:orderInCategory="0"
+        android:title="Calories" />
 
     <item
         android:id="@+id/bottom_book"
-        android:title="Book"
         android:icon="@drawable/bottom_nav_book"
-        android:orderInCategory="0" />
+        android:orderInCategory="0"
+        android:title="Favourite" />
 
     <item
         android:id="@+id/bottom_calender"
-        android:title="Calender"
         android:icon="@drawable/bottom_nav_calender"
-        android:orderInCategory="0" />
+        android:orderInCategory="0"
+        android:title="Calendar" />
 
 
 </menu>

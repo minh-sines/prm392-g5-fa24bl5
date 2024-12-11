@@ -1,14 +1,17 @@
 package com.fu.fe.minhtq.prm392g5fa24bl5.favorites;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.fu.fe.minhtq.prm392g5fa24bl5.R;
 import com.google.android.material.tabs.TabLayout;
@@ -45,9 +48,25 @@ public class FavoritesFragment extends Fragment {
         bindingView();
         tabLayout.addTab(tabLayout.newTab().setText("Món ăn tự tạo"));
         tabLayout.addTab(tabLayout.newTab().setText("Món ăn yêu thích"));
+        TabLayout.Tab tab = tabLayout.getTabAt(0); // Get the first tab
+        if (tab != null) {
+            TextView tabTextView = new TextView(getContext());
+            tabTextView.setTextSize(20);
+            tabTextView.setText("Món ăn tự tạo");
+            tabTextView.setTypeface(tabTextView.getTypeface(), Typeface.BOLD);
+            tab.setCustomView(tabTextView);
+        }
+        TabLayout.Tab tab2 = tabLayout.getTabAt(1); // Get the first tab
+        if (tab2 != null) {
+            TextView tabTextView = new TextView(getContext());
+            tabTextView.setTextSize(20);
+            tabTextView.setText("Món ăn yêu thích");
+            tabTextView.setTypeface(tabTextView.getTypeface(), Typeface.BOLD);
+            tab2.setCustomView(tabTextView);
+        }
 
         // Set initial fragment
-        replaceFragment(new Favorite_Fragment());
+        replaceFragment(new Saved_Fragment());
 
         // Handle tab selection
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -55,10 +74,10 @@ public class FavoritesFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        replaceFragment(new Favorite_Fragment());
+                        replaceFragment(new Saved_Fragment());
                         break;
                     case 1:
-                        replaceFragment(new Saved_Fragment());
+                        replaceFragment(new Favorite_Fragment());
                         break;
                 }
             }

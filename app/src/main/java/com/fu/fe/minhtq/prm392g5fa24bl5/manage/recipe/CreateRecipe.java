@@ -220,9 +220,7 @@ public class CreateRecipe extends AppCompatActivity {
 
             // Lưu ảnh vào bộ nhớ trong
             saveImageToFile(bitmap, CreateRecipe.this, fileName);
-
             recipe = db.recipeDAO().getRecipeById((int) recipeId);
-
             recipe.setMainImage(fileName);
             db.recipeDAO().updateRecipe(recipe);
             Log.d("UpdateRecipe", "Updated recipe with ID: " + recipe.getMainImage());

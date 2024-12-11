@@ -2,6 +2,7 @@ package com.fu.fe.minhtq.prm392g5fa24bl5.model;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "favorite",
@@ -20,6 +21,9 @@ import androidx.room.PrimaryKey;
                 onDelete = ForeignKey.CASCADE, // Action on delete
                 onUpdate = ForeignKey.CASCADE // Action on update
                 )
+        },
+        indices = {
+                @Index(value = {"user_id", "recipe_id"}, unique = true)
         }
 )
 
